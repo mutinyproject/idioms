@@ -3,15 +3,11 @@
 
 == Name
 
-match - return 0 if all strings match the pattern given, return 1 if strings do not.
+match - return 0 if all strings match the pattern given, return 1 if they do not.
 
 == Synopsis
 
 *match* [_OPTIONS_] _PATTERN_ _STRING_ ...
-
-== Description
-
-Exit 0 if (all) strings match the pattern given. Exit 1 if any strings do not.
 
 == Options
 
@@ -22,7 +18,7 @@ Exit 0 if (all) strings match the pattern given. Exit 1 if any strings do not.
     Use a fixed, literal string. This corresponds to grep(1)'s -F option.
 
 *-a*::
-    Exit 0 if _any_ string matches, not all.
+    Check if _any_ string matches, not all.
 
 == Exit status
 
