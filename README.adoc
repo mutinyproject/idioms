@@ -1,0 +1,5 @@
+= `idioms`
+
+A set of useful utilities designed to make scripting more idiomatic, and make shell usage perhaps
+so too. Sorta like `moreutils` but the goal is to standardize common tasks more than anything.
+
