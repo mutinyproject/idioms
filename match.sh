@@ -7,15 +7,15 @@ any=
 
 while getopts EFa arg; do
     case "${arg}" in
-        a)
-            any=true
-            all=
-            ;;
         E)
             pattern_type=-E
             ;;
         F)
             pattern_type=-F
+            ;;
+        a)
+            any=true
+            all=
             ;;
     esac
 done
