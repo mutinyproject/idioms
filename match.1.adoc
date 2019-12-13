@@ -49,7 +49,7 @@ grep(1), expr(1)
 
 == Authors
 
-{authors}
+include::AUTHORS[]
 
 There's an IRC channel for this and other idiom utilities at #mutiny@irc.freenode.net. Please don't
 hesitate to message if you have questions.

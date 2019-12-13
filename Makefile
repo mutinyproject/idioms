@@ -3,24 +3,25 @@ SH = $(wildcard *.sh)
 MAN = $(shell printf '%s\n' *.adoc | grep '.*\.[0-9a-z]*\.adoc')
 HTML = $(MAN)
 
-ASCIIDOCTOR_OPTIONS := --attribute authors="$(shell cat AUTHORS)"
-
 bindir ?= /usr/bin
 datadir ?= /usr/share
 mandir ?= $(datadir)/man
 man1dir ?= $(mandir)/man1
+
+.PHONY: all man html test check install clean
 
 all: man
 
 man: $(MAN:.adoc=)
 html: $(HTML:.adoc=.html)
 
-%.1: %.1.adoc
-	asciidoctor $(ASCIIDOCTOR_OPTIONS) -b manpage $< -o $@
+%.1: %.1.adoc AUTHORS
+	asciidoctor -b manpage $< -o $@
 
-%.html: %.adoc
-	asciidoctor $(ASCIIDOCTOR_OPTIONS) -b html5 $< -o $@
+%.html: %.adoc AUTHORS
+	asciidoctor -b html5 $< -o $@
 
+test: check
 check: all
 	test/test.sh "$(srcdir)"
 
