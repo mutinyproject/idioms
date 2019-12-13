@@ -1,16 +1,23 @@
 srcdir= $(readlink -f .)
 SH = $(wildcard *.sh)
 MAN = $(shell printf '%s\n' *.adoc | grep '.*\.[0-9a-z]*\.adoc')
+HTML = $(MAN)
 
 bindir ?= /usr/bin
 datadir ?= /usr/share
 mandir ?= $(datadir)/man
 man1dir ?= $(mandir)/man1
 
-all: $(MAN:.adoc=)
+all: man
+
+man: $(MAN:.adoc=)
+html: $(HTML:.adoc=.html)
 
 %.1: %.1.adoc
 	asciidoctor -b manpage $< -o $@
+
+%.html: %.adoc
+	asciidoctor -b html5 $< -o $@
 
 check: all
 	test/test.sh "$(srcdir)"
@@ -24,4 +31,4 @@ install: all
 	)
 
 clean:
-	rm -f $(MAN:.adoc=)
+	rm -f $(MAN:.adoc=) $(HTML:.adoc=.html)
