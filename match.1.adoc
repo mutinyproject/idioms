@@ -3,7 +3,7 @@
 
 == Name
 
-match - return 0 if all strings match the pattern given, return 1 if they do not.
+*match* - return 0 if all strings match the pattern given, return 1 if they do not.
 
 == Synopsis
 
