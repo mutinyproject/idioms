@@ -1,4 +1,5 @@
 = match(1)
+:source-highlighter: rouge
 
 == Name
 
@@ -33,11 +34,14 @@ Exit 0 if (all) strings match the pattern given. Exit 1 if any strings do not.
 
 == Examples
 
-    if match "[0-9]{4}-[0-9]{2}-[0-9]{2}" "1998-05-28";then
-        echo "that was a date!"
-    else
-        echo "please give a date instead"
-    fi
+[source,shell]
+----
+if match "[0-9]{4}-[0-9]{2}-[0-9]{2}" "1998-05-28";then
+    echo "that was a date!"
+else
+    echo "please give a date instead"
+fi
+----
 
 == See also
 
