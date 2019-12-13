@@ -19,7 +19,7 @@ Exit 0 if (all) strings match the pattern given. Exit 1 if any strings do not.
     Use extended regular expressions. This corresponds to grep(1)'s -E option.
 
 *-F*::
-    Use a fixed, literal string. This corrisponds to grep(1)'s -F option.
+    Use a fixed, literal string. This corresponds to grep(1)'s -F option.
 
 *-a*::
     Exit 0 if _any_ string matches, not all.
@@ -51,7 +51,7 @@ grep(1), expr(1)
 
 {authors}
 
-There's an IRC channel for this and other idiom utilties at #mutiny@irc.freenode.net. Please don't
+There's an IRC channel for this and other idiom utilities at #mutiny@irc.freenode.net. Please don't
 hesitate to message if you have questions.
 
 == License
