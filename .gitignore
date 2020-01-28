@@ -1,2 +1,5 @@
-*.1
-*.html
+bin/*
+man/*.html
+**.sh
+
+!*.in

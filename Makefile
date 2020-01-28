@@ -1,37 +1,66 @@
-srcdir= $(readlink -f .)
-SH = $(wildcard *.sh)
-MAN = $(shell printf '%s\n' *.adoc | grep '.*\.[0-9a-z]*\.adoc')
-HTML = $(MAN)
+name = idioms
+version = 20200128
 
-bindir ?= /usr/bin
-datadir ?= /usr/share
+prefix ?=
+bindir ?= $(prefix)/bin
+datadir ?= $(prefix)/share
 mandir ?= $(datadir)/man
 man1dir ?= $(mandir)/man1
 
-.PHONY: all man html test check install clean
+BINS := $(patsubst %.in, %, $(shell find bin/ -name '*.in'))
+MAN1S := $(patsubst %.adoc, %, $(wildcard man/*.1.adoc))
+HTMLS := $(patsubst %.adoc, %.html, $(wildcard man/*.adoc))
+MANS := $(MAN1S)
 
-all: man
+INSTALLS := \
+	$(addprefix $(DESTDIR)$(bindir)/,$(BINS:bin/%=%)) \
+	$(addprefix $(DESTDIR)$(man1dir)/,$(MAN1S:man/%=%))
 
-man: $(MAN:.adoc=)
-html: $(HTML:.adoc=.html)
+.PHONY: all
+all: bin man
 
-%.1: %.1.adoc AUTHORS
-	asciidoctor -b manpage $< -o $@
-
-%.html: %.adoc AUTHORS
-	asciidoctor -b html5 $< -o $@
-
-test: check
-check: all
-	test/test.sh "$(srcdir)"
-
-install: all
-	$(foreach sh,$(SH:.sh=), \
-	    install -D -m 755 $(sh).sh $(DESTDIR)$(bindir)/$(sh); \
-	)
-	$(foreach man,$(MAN:.adoc=), \
-	    install -D -m 644 $(man) $(DESTDIR)$(man1dir)/$(sh); \
-	)
-
+.PHONY: clean
 clean:
-	rm -f $(MAN:.adoc=) $(HTML:.adoc=.html)
+	rm -f $(BINS) $(LIBS) $(MANS) $(HTMLS)
+
+.PHONY: install
+install: $(INSTALLS)
+
+.PHONY: test check
+test: check
+
+check: all
+	test/test.sh
+
+.PHONY: bin
+bin: $(BINS)
+
+.PHONY: man
+man: $(MANS)
+
+.PHONY: html
+html: $(HTMLS)
+
+bin/%: bin/%.in
+	sed \
+		-e "s|@@name@@|$(name)|g" \
+		-e "s|@@version@@|$(version)|g" \
+		-e "s|@@prefix@@|$(prefix)|g" \
+		-e "s|@@bindir@@|$(bindir)|g" \
+		$< > $@
+	chmod +x $@
+
+.DELETE_ON_ERROR: man/%
+man/%.html: man/%.adoc
+	asciidoctor --failure-level=WARNING -b html5 -B $(PWD) -o $@ $<
+
+.DELETE_ON_ERROR: man/%
+man/%: man/%.adoc
+	asciidoctor --failure-level=WARNING -b manpage -B $(PWD) -d manpage -o $@ $<
+
+$(DESTDIR)$(bindir)/%: bin/%
+	install -D $< $@
+
+$(DESTDIR)$(man1dir)/%: man/%
+	install -D $< $@
+
