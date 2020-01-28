@@ -2,4 +2,5 @@ bin/*
 man/*.html
 **.sh
 
+!test/*.sh
 !*.in

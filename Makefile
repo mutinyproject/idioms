@@ -30,7 +30,7 @@ install: $(INSTALLS)
 test: check
 
 check: all
-	test/test.sh
+	hope test/match.sh
 
 .PHONY: bin
 bin: $(BINS)
