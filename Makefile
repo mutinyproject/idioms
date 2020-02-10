@@ -29,8 +29,8 @@ install: $(INSTALLS)
 .PHONY: test check
 test: check
 
-check: all
-	hope test/match.sh
+check: bin
+	shellspec -e PATH="$(PWD)/bin:$(PATH)" $(SHELLSPEC_FLAGS)
 
 .PHONY: bin
 bin: $(BINS)
