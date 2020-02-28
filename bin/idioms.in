@@ -1,0 +1,9 @@
+#!/bin/sh
+
+[ $# -gt 0 ] && printf 'usage: . %s\n' "idioms" && exit 127
+
+case "$0" in
+    */idioms)   exec cat "@@libdir@@/idioms.sh" ;;
+    *)          . "@@libdir@@/idioms.sh" ;;
+esac
+
