@@ -72,7 +72,7 @@ bin/%: bin/%.in
 	    -e "s|@@man7dir@@|$(man7dir)|g" \
 	    $< > $@.temp
 	chmod +x $@.temp
-	mv $@.temp $@
+	mv -f $@.temp $@
 
 lib/%: lib/%.in
 	sed \
@@ -86,7 +86,7 @@ lib/%: lib/%.in
 	    -e "s|@@man7dir@@|$(man7dir)|g" \
 	    $< > $@.temp
 	chmod +x $@.temp
-	mv $@.temp $@
+	mv -f $@.temp $@
 
 .DELETE_ON_ERROR: man/%.html
 man/%.html: man/%.adoc man/footer.adoc.template
