@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. idioms
+
 unset GREP_OPTIONS
 
 all=true
