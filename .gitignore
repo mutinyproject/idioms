@@ -1,6 +1,12 @@
-bin/*
-man/*.html
-**.sh
+*
+!/**/
+!*.*
 
-!spec/*.sh
-!*.in
+!.*
+!Makefile
+!LICENSE
+
+*.html
+**/*.html
+*.sh
+**/*.sh
