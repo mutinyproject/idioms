@@ -4,20 +4,25 @@ version = 20200128
 prefix ?=
 bindir ?= $(prefix)/bin
 datadir ?= $(prefix)/share
+libdir ?= $(prefix)/lib
 mandir ?= $(datadir)/man
 man1dir ?= $(mandir)/man1
 
-BINS := $(patsubst %.in, %, $(shell find bin/ -name '*.in'))
+libdir := $(libdir)/$(name)
+
+BINS := $(patsubst %.in, %, $(wildcard bin/*.in))
+LIBS := $(patsubst %.in, %, $(wildcard lib/*.in))
+MANS := $(patsubst %.adoc, %, $(wildcard man/*.adoc))
 MAN1S := $(patsubst %.adoc, %, $(wildcard man/*.1.adoc))
 HTMLS := $(patsubst %.adoc, %.html, $(wildcard man/*.adoc))
-MANS := $(MAN1S)
 
 INSTALLS := \
-	$(addprefix $(DESTDIR)$(bindir)/,$(BINS:bin/%=%)) \
-	$(addprefix $(DESTDIR)$(man1dir)/,$(MAN1S:man/%=%))
+    $(addprefix $(DESTDIR)$(bindir)/,$(BINS:bin/%=%)) \
+    $(addprefix $(DESTDIR)$(libdir)/,$(LIBS:lib/%=%)) \
+    $(addprefix $(DESTDIR)$(man1dir)/,$(MAN1S:man/%=%))
 
 .PHONY: all
-all: bin man
+all: bin lib man
 
 .PHONY: clean
 clean:
@@ -26,33 +31,54 @@ clean:
 .PHONY: install
 install: $(INSTALLS)
 
-.PHONY: test check
+.PHONY: lint
+lint:
+	printf '%s\n' $(patsubst %,%.in,$(BINS)) $(patsubst %,%.in,$(LIBS)) | xargs shellcheck
+
+.PHONY: test
 test: check
 
-check: bin
-	shellspec -e PATH="$(PWD)/bin:$(PATH)" $(SHELLSPEC_FLAGS)
+.PHONY: check
+check: bin lib
+	shellspec $(SHELLSPEC_FLAGS)
+
+.PHONY: maint
+maint: lint check
 
 .PHONY: bin
 bin: $(BINS)
 
+.PHONY: lib
+lib: $(LIBS)
+
 .PHONY: man
 man: $(MANS)
 
-.PHONY: html
-html: $(HTMLS)
-
 bin/%: bin/%.in
 	sed \
-		-e "s|@@name@@|$(name)|g" \
-		-e "s|@@version@@|$(version)|g" \
-		-e "s|@@prefix@@|$(prefix)|g" \
-		-e "s|@@bindir@@|$(bindir)|g" \
-		$< > $@
-	chmod +x $@
+	    -e "s|@@name@@|$(name)|g" \
+	    -e "s|@@version@@|$(version)|g" \
+	    -e "s|@@prefix@@|$(prefix)|g" \
+	    -e "s|@@bindir@@|$(bindir)|g" \
+	    -e "s|@@libdir@@|$(libdir)|g" \
+	    -e "s|@@mandir@@|$(mandir)|g" \
+	    -e "s|@@man1dir@@|$(man1dir)|g" \
+	    $< > $@.temp
+	chmod +x $@.temp
+	mv $@.temp $@
 
-.DELETE_ON_ERROR: man/%
-man/%.html: man/%.adoc
-	asciidoctor --failure-level=WARNING -b html5 -B $(PWD) -o $@ $<
+lib/%: lib/%.in
+	sed \
+	    -e "s|@@name@@|$(name)|g" \
+	    -e "s|@@version@@|$(version)|g" \
+	    -e "s|@@prefix@@|$(prefix)|g" \
+	    -e "s|@@bindir@@|$(bindir)|g" \
+	    -e "s|@@libdir@@|$(libdir)|g" \
+	    -e "s|@@mandir@@|$(mandir)|g" \
+	    -e "s|@@man1dir@@|$(man1dir)|g" \
+	    $< > $@.temp
+	chmod +x $@.temp
+	mv $@.temp $@
 
 .DELETE_ON_ERROR: man/%
 man/%: man/%.adoc
@@ -61,6 +87,9 @@ man/%: man/%.adoc
 $(DESTDIR)$(bindir)/%: bin/%
 	install -D $< $@
 
+$(DESTDIR)$(libdir)/%: lib/%
+	install -D -m 0644 $< $@
+
 $(DESTDIR)$(man1dir)/%: man/%
-	install -D $< $@
+	install -D -m 0644 $< $@
 
