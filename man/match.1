@@ -2,12 +2,12 @@
 .\"     Title: match
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2019-12-13
+.\"      Date: 2020-02-27
 .\"    Manual: \ \&
 .\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "*MATCH*" "1" "2019-12-13" "\ \&" "\ \&"
+.TH "MATCH" "1" "2020-02-27" "\ \&" "\ \&"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -28,10 +28,10 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-*match* \- return 0 if all strings match the pattern given, return 1 if they do not.
+match \- return 0 if all strings match the pattern given, return 1 if they do not.
 .SH "SYNOPSIS"
 .sp
-\fBmatch\fP [\fIOPTIONS\fP] \fIPATTERN\fP \fISTRING\fP ...
+\fBmatch\fP [\fIOPTIONS\fP] \fIPATTERN\fP \fISTRING\fP...
 .SH "OPTIONS"
 .sp
 \fB\-E\fP
@@ -72,7 +72,7 @@ fi
 .if n .RE
 .SH "RATIONALE"
 .sp
-The goal of \fBmatch(1)\fP is to prevent ugly regular expression matching in scripts. There\(cqs a few
+The goal of \fBmatch\fP(1) is to prevent ugly regular expression matching in scripts. There\(cqs a few
 ways to do this.
 .sp
 .RS 4
@@ -83,7 +83,7 @@ ways to do this.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-With \fBexpr(1)\fP\(cqs match function, which doesn\(cqt support extended regular expressions or fixed
+With \fBexpr\fP(1)\(aqs match function, which doesn\(cqt support extended regular expressions or fixed
 strings, and has added baggage due to POSIX.
 .RE
 .sp
@@ -95,9 +95,9 @@ strings, and has added baggage due to POSIX.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-With \fBgrep(1)\fP reading from standard input, counting the amount of matches. This is how match(1)
+With \fBgrep\fP(1) reading from standard input, counting the amount of matches. This is how match(1)
 actually does it internally, but it looks pretty ugly and there\(cqs a multitude of ways to do this
-one simple task with it. One could also check the output of \fBgrep(1)\fP to see if it outputs
+one simple task with it. One could also check the output of \fBgrep\fP(1) to see if it outputs
 anything.
 .RE
 .sp
@@ -109,25 +109,21 @@ anything.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-Usage of \fBbash(1)\fP\(cqs \f(CR=~\fP test as part of its \f(CR[[\fP syntax.
+Usage of \fBbash\fP(1)\(aqs \f(CR=~\fP test as part of its \f(CR[[\fP syntax.
 .RE
 .sp
-With the exception of \fBbash(1)\fP, most of these are pretty ugly. There\(cqs no need for a shell
-extension, as this is something which certainly can be done POSIXly; using \fBmatch(1)\fP, this becomes
+With the exception of \fBbash\fP(1), most of these are pretty ugly. There\(cqs no need for a shell
+extension, as this is something which certainly can be done POSIXly; using \fBmatch\fP(1), this becomes
 a more uniform action to perform as there\(cqs just one way to do it and it\(cqs not a particularly ugly
 way either. This leads to more readable scripts with less magic\-looking code.
 .SH "SEE ALSO"
 .sp
-\fBgrep(1)\fP, \fBexpr(1)\fP
-.SH "AUTHORS"
-.sp
-Kylie McClain <\c
-.MTO "kylie\(atsomas.is" "" ">"
+\fBexpr\fP(1), \fBgrep\fP(1)
+.SH "BUGS"
 .sp
 There\(cqs an IRC channel for this and other utilities at \c
 .URL "irc://irc.freenode.net/#mutiny" "" "."
-Please don\(cqt
-hesitate to message if you have questions.
+Please don\(cqt hesitate to message if you have questions.
 .SH "LICENSE"
 .sp
 \fBmatch\fP is in the public domain.

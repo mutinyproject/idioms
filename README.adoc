@@ -1,12 +1,1 @@
-= `idioms`
-
-A set of useful utilities designed to make scripting more idiomatic, and make shell usage perhaps
-so too. Sorta like `moreutils` but the goal is to standardize common tasks more than anything.
-
-== Requirements
-
-* A POSIX-compliant shell. (ex. `bash`, `mksh`, etc.)
-	** An implementation of the POSIX-defined `printf` command. This might be provided by the shell
-	   (it is in `bash`), but it can also just be a regular command without issue.
-* A POSIX-compliant `grep`.
-* https://github.com/shellspec/shellspec[`shellspec`], if you wish to run tests.
+man/idioms.7.adoc

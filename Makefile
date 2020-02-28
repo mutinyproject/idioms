@@ -7,6 +7,7 @@ datadir ?= $(prefix)/share
 libdir ?= $(prefix)/lib
 mandir ?= $(datadir)/man
 man1dir ?= $(mandir)/man1
+man7dir ?= $(mandir)/man7
 
 libdir := $(libdir)/$(name)
 
@@ -14,12 +15,14 @@ BINS := $(patsubst %.in, %, $(wildcard bin/*.in))
 LIBS := $(patsubst %.in, %, $(wildcard lib/*.in))
 MANS := $(patsubst %.adoc, %, $(wildcard man/*.adoc))
 MAN1S := $(patsubst %.adoc, %, $(wildcard man/*.1.adoc))
+MAN7S := $(patsubst %.adoc, %, $(wildcard man/*.7.adoc))
 HTMLS := $(patsubst %.adoc, %.html, $(wildcard man/*.adoc))
 
 INSTALLS := \
     $(addprefix $(DESTDIR)$(bindir)/,$(BINS:bin/%=%)) \
     $(addprefix $(DESTDIR)$(libdir)/,$(LIBS:lib/%=%)) \
-    $(addprefix $(DESTDIR)$(man1dir)/,$(MAN1S:man/%=%))
+    $(addprefix $(DESTDIR)$(man1dir)/,$(MAN1S:man/%=%)) \
+    $(addprefix $(DESTDIR)$(man7dir)/,$(MAN7S:man/%=%))
 
 .PHONY: all
 all: bin lib man
@@ -63,6 +66,7 @@ bin/%: bin/%.in
 	    -e "s|@@libdir@@|$(libdir)|g" \
 	    -e "s|@@mandir@@|$(mandir)|g" \
 	    -e "s|@@man1dir@@|$(man1dir)|g" \
+	    -e "s|@@man7dir@@|$(man7dir)|g" \
 	    $< > $@.temp
 	chmod +x $@.temp
 	mv $@.temp $@
@@ -76,12 +80,13 @@ lib/%: lib/%.in
 	    -e "s|@@libdir@@|$(libdir)|g" \
 	    -e "s|@@mandir@@|$(mandir)|g" \
 	    -e "s|@@man1dir@@|$(man1dir)|g" \
+	    -e "s|@@man7dir@@|$(man7dir)|g" \
 	    $< > $@.temp
 	chmod +x $@.temp
 	mv $@.temp $@
 
 .DELETE_ON_ERROR: man/%
-man/%: man/%.adoc
+man/%: man/%.adoc man/footer.adoc.template
 	asciidoctor --failure-level=WARNING -b manpage -B $(PWD) -d manpage -o $@ $<
 
 $(DESTDIR)$(bindir)/%: bin/%
@@ -91,5 +96,8 @@ $(DESTDIR)$(libdir)/%: lib/%
 	install -D -m 0644 $< $@
 
 $(DESTDIR)$(man1dir)/%: man/%
+	install -D -m 0644 $< $@
+
+$(DESTDIR)$(man7dir)/%: man/%
 	install -D -m 0644 $< $@
 

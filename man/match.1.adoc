@@ -3,11 +3,11 @@
 
 == Name
 
-*match* - return 0 if all strings match the pattern given, return 1 if they do not.
+match - return 0 if all strings match the pattern given, return 1 if they do not.
 
 == Synopsis
 
-*match* [_OPTIONS_] _PATTERN_ _STRING_ ...
+*match* [_OPTIONS_] _PATTERN_ _STRING_...
 
 == Options
 
@@ -41,39 +41,26 @@ fi
 
 == Rationale
 
-The goal of *match(1)* is to prevent ugly regular expression matching in scripts. There's a few
+The goal of *match*(1) is to prevent ugly regular expression matching in scripts. There's a few
 ways to do this.
 
-* With *expr(1)*'s match function, which doesn't support extended regular expressions or fixed
+* With *expr*(1)'s match function, which doesn't support extended regular expressions or fixed
   strings, and has added baggage due to POSIX.
-* With *grep(1)* reading from standard input, counting the amount of matches. This is how match(1)
+* With *grep*(1) reading from standard input, counting the amount of matches. This is how match(1)
   actually does it internally, but it looks pretty ugly and there's a multitude of ways to do this
-  one simple task with it. One could also check the output of *grep(1)* to see if it outputs
+  one simple task with it. One could also check the output of *grep*(1) to see if it outputs
   anything.
-* Usage of *bash(1)*'s `=~` test as part of its `[[` syntax.
+* Usage of *bash*(1)'s `=~` test as part of its `[[` syntax.
 
-With the exception of *bash(1)*, most of these are pretty ugly. There's no need for a shell
-extension, as this is something which certainly can be done POSIXly; using *match(1)*, this becomes
+With the exception of *bash*(1), most of these are pretty ugly. There's no need for a shell
+extension, as this is something which certainly can be done POSIXly; using *match*(1), this becomes
 a more uniform action to perform as there's just one way to do it and it's not a particularly ugly
 way either. This leads to more readable scripts with less magic-looking code.
 
 == See also
 
-*grep(1)*, *expr(1)*
+*expr*(1), *grep*(1)
 
-== Authors
+include::man/footer.adoc.template[]
 
-include::AUTHORS[]
-
-There's an IRC channel for this and other utilities at irc://irc.freenode.net/#mutiny. Please don't
-hesitate to message if you have questions.
-
-== License
-
-*match* is in the public domain.
-
-To the extent possible under law, Kylie McClain has waived all copyright and related or neighboring
-rights to this work.
-
-http://creativecommons.org/publicdomain/zero/1.0/
 
