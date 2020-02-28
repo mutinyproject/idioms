@@ -66,7 +66,7 @@ bin/%: bin/%.in
 	    -e "s|@@version@@|$(version)|g" \
 	    -e "s|@@prefix@@|$(prefix)|g" \
 	    -e "s|@@bindir@@|$(bindir)|g" \
-	    -e "s|@@libdir@@|$(libdir)|g" \
+	    -e "s|@@libdir@@|\$${IDIOMS_LIBDIR:-$(libdir)}|g" \
 	    -e "s|@@mandir@@|$(mandir)|g" \
 	    -e "s|@@man1dir@@|$(man1dir)|g" \
 	    -e "s|@@man7dir@@|$(man7dir)|g" \
@@ -80,7 +80,7 @@ lib/%: lib/%.in
 	    -e "s|@@version@@|$(version)|g" \
 	    -e "s|@@prefix@@|$(prefix)|g" \
 	    -e "s|@@bindir@@|$(bindir)|g" \
-	    -e "s|@@libdir@@|$(libdir)|g" \
+	    -e "s|@@libdir@@|\$${IDIOMS_LIBDIR:-$(libdir)}|g" \
 	    -e "s|@@mandir@@|$(mandir)|g" \
 	    -e "s|@@man1dir@@|$(man1dir)|g" \
 	    -e "s|@@man7dir@@|$(man7dir)|g" \
