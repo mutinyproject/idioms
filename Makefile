@@ -57,6 +57,9 @@ lib: $(LIBS)
 .PHONY: man
 man: $(MANS)
 
+.PHONY: html
+html: $(HTMLS)
+
 bin/%: bin/%.in
 	sed \
 	    -e "s|@@name@@|$(name)|g" \
@@ -84,6 +87,10 @@ lib/%: lib/%.in
 	    $< > $@.temp
 	chmod +x $@.temp
 	mv $@.temp $@
+
+.DELETE_ON_ERROR: man/%.html
+man/%.html: man/%.adoc man/footer.adoc.template
+	asciidoctor --failure-level=WARNING -b html5 -B $(PWD) -d manpage -o $@ $<
 
 .DELETE_ON_ERROR: man/%
 man/%: man/%.adoc man/footer.adoc.template
