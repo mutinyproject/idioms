@@ -1,7 +1,7 @@
 name = idioms
 version = 20200128
 
-prefix ?=
+prefix ?= /usr/local
 bindir ?= $(prefix)/bin
 datadir ?= $(prefix)/share
 libdir ?= $(prefix)/lib
