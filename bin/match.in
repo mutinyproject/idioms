@@ -8,6 +8,7 @@ unset GREP_OPTIONS
 
 all=true
 any=
+pattern_type=
 
 while getopts :EFa arg >/dev/null 2>&1; do
     case "${arg}" in
@@ -18,8 +19,8 @@ while getopts :EFa arg >/dev/null 2>&1; do
             pattern_type=-F
             ;;
         a)
-            any=true
             all=
+            any=true
             ;;
         -)
             break
@@ -37,5 +38,5 @@ shift $((OPTIND - 1))
 
 pattern="${1}"; shift
 
-[ $(printf '%s\n' "$@" | grep ${pattern_type} -c ${all:+-v} -- "${pattern}") ${all:+-eq 0}${any:+-ne 0} ] || exit 1
+test $(printf '%s\n' "$@" | grep ${pattern_type} -c ${all:+-v} -- "${pattern}") ${all:+-eq 0}${any:+-ne 0} || exit 1
 
