@@ -2,7 +2,7 @@
 
 . idioms
 
-usage() { die -s "usage: %s [-EFa] PATTERN STRING...\n" "${0##*/}" }
+usage() { die "usage: %s [-EFa] PATTERN STRING...\n" "${0##*/}"; }
 
 unset GREP_OPTIONS
 

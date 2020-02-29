@@ -87,7 +87,7 @@ run() {
 
         case "$1" in
             -k)
-                local keep_going=true
+                keep_going=true
                 ;;
             -n)
                 dry_run=true
