@@ -22,9 +22,6 @@ while getopts :EFa arg >/dev/null 2>&1; do
             all=
             any=true
             ;;
-        -)
-            break
-            ;;
         ?)
             error "unknown argument -- %s\n" "${OPTARG}"
             usage
