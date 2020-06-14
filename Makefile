@@ -102,8 +102,9 @@ install: FRC all
 clean: FRC
 	rm -f ${BINS} ${LIBS} ${MANS} ${HTMLS}
 
+.DELETE_ON_ERROR: README
 README: idioms.7
-	man ./$< | col -bx > README
+	man ./$? | col -bx > $@
 
 lint: FRC ${BINS} ${LIBS}
 	${SHELLCHECK} ${BINS:=.in} ${LIBS:=.in}
