@@ -1,0 +1,11 @@
+#!/bin/sh
+
+exec sed '
+    :combine
+
+    /[^\]\\$/ {
+        N
+        s|\\\n||
+        t combine
+    }
+' -- "$@"

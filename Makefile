@@ -14,6 +14,7 @@ man3dir ?= ${mandir}/man3
 libdir := ${libdir}/${name}
 
 BINS = \
+    backslash \
     idioms \
     integer \
     lastarg \

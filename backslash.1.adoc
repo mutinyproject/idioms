@@ -1,0 +1,41 @@
+= backslash(1)
+
+== Name
+
+backslash - combine lines that end with a backslash
+
+== Synopsis
+
+*backslash* [_FILE_]
+
+== Description
+
+*backslash* combines lines that end up with a backslash. It takes no options, and merely calls out
+to sed(1) to actually do the work.
+
+For example, if *backslash* were given as input:
+
+[example]
+----
+foo bar baz \
+quux quuz xyzzy\
+zzy
+----
+
+it would output:
+
+[example]
+----
+foo bar baz quux quuz xyzzyzzy
+----
+
+== Notes
+
+It would be a plain ol' sed(1) script, but that would cause options to be passed to sed(1), which
+from a presentation standpoint just looks silly.
+
+== See also
+
+sed(1)
+
+include::footer.adoc[]
