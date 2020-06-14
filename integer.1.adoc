@@ -2,7 +2,7 @@
 
 == Name
 
-integer - check if all given arguments are positive integers
+integer - check if all given arguments are non-negative integers
 
 == Synopsis
 
@@ -11,13 +11,13 @@ integer - check if all given arguments are positive integers
 == Exit status
 
 *0*::
-    All strings given were integers.
+    All strings given were non-negative integers.
 
 *1*::
-    At least one string was not an integer.
+    At least one string was not a non-negative integer.
 
 == Notes
 
-For the purposes of scripting, 0 (zero) is considered a positive integer.
+For the purposes of scripting, 0 (zero) is considered a non-negative integer.
 
 include::footer.adoc[]

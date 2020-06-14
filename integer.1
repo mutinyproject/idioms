@@ -28,7 +28,7 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-integer \- check if all given arguments are positive integers
+integer \- check if all given arguments are non\-negative integers
 .SH "SYNOPSIS"
 .sp
 \fBinteger\fP \fISTRING\fP...
@@ -36,16 +36,16 @@ integer \- check if all given arguments are positive integers
 .sp
 \fB0\fP
 .RS 4
-All strings given were integers.
+All strings given were non\-negative integers.
 .RE
 .sp
 \fB1\fP
 .RS 4
-At least one string was not an integer.
+At least one string was not a non\-negative integer.
 .RE
 .SH "NOTES"
 .sp
-For the purposes of scripting, 0 (zero) is considered a positive integer.
+For the purposes of scripting, 0 (zero) is considered a non\-negative integer.
 .SH "BUGS"
 .sp
 There\(cqs an IRC channel for this and other utilities at \c
