@@ -1,0 +1,19 @@
+= integer(1)
+
+== Name
+
+integer - check if a given string is an integer
+
+== Synopsis
+
+*integer* _STRING_...
+
+== Exit status
+
+*0*::
+    All strings given were integers.
+
+*1*::
+    At least one string was not an integer.
+
+include::footer.adoc[]

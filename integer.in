@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. idioms
+
+usage() { die "usage: %s STRING...\n" "${0##*/}"; }
+
+[ $# -gt 0 ] || usage
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        *[!0-9]*) exit 1 ;;
+        *) shift; continue ;;
+    esac
+done
+
