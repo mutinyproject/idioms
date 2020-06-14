@@ -7,12 +7,17 @@ idioms - overview of idiomatic utilities for scripting
 == Description
 
 *idioms* is a set of useful utilities and functions designed to make scripting more idiomatic.
-It's akin to `moreutils`, but the main goal is to standardize common tasks, improve code quality
+It's akin to `moreutils`, but the main goal is to standardize common tasks, improve code smell, and
+also make automating things like safely failing when running commands easier.
 
-*idioms* consists of these utilities:
+*idioms* consists of these parts:
 
-idioms(1)::   functions
-match(1)::    check that a string matches a pattern
+backslash(1)::  combine lines that end with a backslash
+idioms(1)::     setup usage of idioms(3) functions in a script
+idioms(3)::     useful functions that work within a script runtime
+integer(1)::    check if all given arguments are positve integers
+lastarg(1)::    print the last argument given
+match(1)::      succeed if all strings match a given pattern
 
 == Dependencies
 
@@ -30,7 +35,8 @@ match(1)::    check that a string matches a pattern
 
 .Development
 * https://github.com/shellspec/shellspec[`shellspec`], if you wish to run tests.
-* shellcheck(1), if you wish to lint files.
-* asciidoctor(1), if you wish to regenerate manual pages (HTML, or manpage format).
+* https://github.com/koalaman/shellcheck[shellcheck(1)], if you wish to lint files.
+* https://asciidoctor.org[asciidoctor(1)], if you wish to regenerate manual pages (HTML, or manpage
+  format).
 
 include::footer.adoc[]

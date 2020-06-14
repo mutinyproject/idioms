@@ -1,4 +1,4 @@
-IDIOMS(7)                  Mutineer's Guide - idioms                 IDIOMS(7)
+IDIOMS(7)                                                            IDIOMS(7)
 
 
 
@@ -8,15 +8,28 @@ NAME
 DESCRIPTION
        idioms is a set of useful utilities and functions designed to make
        scripting more idiomatic.  It’s akin to moreutils, but the main goal is
-       to standardize common tasks, improve code quality
+       to standardize common tasks, improve code smell, and also make
+       automating things like safely failing when running commands easier.
 
-       idioms consists of these utilities:
+       idioms consists of these parts:
+
+       backslash(1)
+           combine lines that end with a backslash
 
        idioms(1)
-           functions
+           setup usage of idioms(3) functions in a script
+
+       idioms(3)
+           useful functions that work within a script runtime
+
+       integer(1)
+           check if all given arguments are positve integers
+
+       lastarg(1)
+           print the last argument given
 
        match(1)
-           check that a string matches a pattern
+           succeed if all strings match a given pattern
 
 DEPENDENCIES
        Build
@@ -44,10 +57,11 @@ DEPENDENCIES
        •   shellspec <https://github.com/shellspec/shellspec>, if you wish to
            run tests.
 
-       •   shellcheck(1), if you wish to lint files.
+       •   shellcheck(1) <https://github.com/koalaman/shellcheck>, if you wish
+           to lint files.
 
-       •   asciidoctor(1), if you wish to regenerate manual pages (HTML, or
-           manpage format).
+       •   asciidoctor(1) <https://asciidoctor.org>, if you wish to regenerate
+           manual pages (HTML, or manpage format).
 
 BUGS
        There’s an IRC channel for this and other utilities at
@@ -64,4 +78,4 @@ LICENSE
 
 
 
-Mutiny                            2020-06-13                         IDIOMS(7)
+                                  2020-06-14                         IDIOMS(7)

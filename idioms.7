@@ -2,12 +2,12 @@
 .\"     Title: idioms
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-06-13
-.\"    Manual: Mutineer's Guide - idioms
-.\"    Source: Mutiny
+.\"      Date: 2020-06-14
+.\"    Manual: \ \&
+.\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "IDIOMS" "7" "2020-06-13" "Mutiny" "Mutineer\(aqs Guide \- idioms"
+.TH "IDIOMS" "7" "2020-06-14" "\ \&" "\ \&"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -32,18 +32,39 @@ idioms \- overview of idiomatic utilities for scripting
 .SH "DESCRIPTION"
 .sp
 \fBidioms\fP is a set of useful utilities and functions designed to make scripting more idiomatic.
-It\(cqs akin to \f(CRmoreutils\fP, but the main goal is to standardize common tasks, improve code quality
+It\(cqs akin to \f(CRmoreutils\fP, but the main goal is to standardize common tasks, improve code smell, and
+also make automating things like safely failing when running commands easier.
 .sp
-\fBidioms\fP consists of these utilities:
+\fBidioms\fP consists of these parts:
+.sp
+backslash(1)
+.RS 4
+combine lines that end with a backslash
+.RE
 .sp
 idioms(1)
 .RS 4
-functions
+setup usage of idioms(3) functions in a script
+.RE
+.sp
+idioms(3)
+.RS 4
+useful functions that work within a script runtime
+.RE
+.sp
+integer(1)
+.RS 4
+check if all given arguments are positve integers
+.RE
+.sp
+lastarg(1)
+.RS 4
+print the last argument given
 .RE
 .sp
 match(1)
 .RS 4
-check that a string matches a pattern
+succeed if all strings match a given pattern
 .RE
 .SH "DEPENDENCIES"
 .sp
@@ -135,7 +156,8 @@ if you wish to run tests.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-shellcheck(1), if you wish to lint files.
+.URL "https://github.com/koalaman/shellcheck" "shellcheck(1)" ","
+if you wish to lint files.
 .RE
 .sp
 .RS 4
@@ -146,7 +168,9 @@ shellcheck(1), if you wish to lint files.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-asciidoctor(1), if you wish to regenerate manual pages (HTML, or manpage format).
+.URL "https://asciidoctor.org" "asciidoctor(1)" ","
+if you wish to regenerate manual pages (HTML, or manpage
+format).
 .RE
 .SH "BUGS"
 .sp
