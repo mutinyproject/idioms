@@ -3,29 +3,19 @@ date_wrong=20x9-e3-93
 date_regex="[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])"
 
 Describe "match"
-    It "demonstrates basic functionality"
+    It "matches a string against a regular expression"
         When call match -E "${date_regex}" "${date_right}"
-        The status should eq 0
+        The status should equal 0
     End
 
-    It "fails when there's no match"
+    It "fails when there is a string that does not match it"
         When call match -E "${date_regex}" "${date_wrong}"
-        The status should eq 1
+        The status should equal 1
     End
 
-    It "matches all by default (args: one should match and one should not)"
+    It "when given multiple strings, fails if any string does not match the expression"
         When call match -E "${date_regex}" "${date_right}" "${date_wrong}"
-        The status should eq 1
-    End
-
-    It "matches any when -a is given (args: one should and one should not)"
-        When call match -a -E "${date_regex}" "${date_right}" "${date_wrong}"
-        The status should eq 0
-    End
-
-    It "matches any when -a is given (args: neither should match)"
-        When call match -a -E "${date_regex}" "${date_wrong}" "${date_wrong}"
-        The status should eq 1
+        The status should equal 1
     End
 End
 

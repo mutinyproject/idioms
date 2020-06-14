@@ -2,12 +2,12 @@
 .\"     Title: match
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-06-10
-.\"    Manual: Mutineer's Guide
+.\"      Date: 2020-06-11
+.\"    Manual: Mutineer's Guide - idioms
 .\"    Source: Mutiny
 .\"  Language: English
 .\"
-.TH "MATCH" "1" "2020-06-10" "Mutiny" "Mutineer\(aqs Guide"
+.TH "MATCH" "1" "2020-06-11" "Mutiny" "Mutineer\(aqs Guide \- idioms"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -28,10 +28,10 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-match \- return 0 if all strings match the pattern given, return 1 if they do not.
+match \- succeed if all strings match a given pattern
 .SH "SYNOPSIS"
 .sp
-\fBmatch\fP [\fB\-E\fP|\fB\-F\fP] [\fB\-a\fP] \fIPATTERN\fP \fISTRING\fP...
+\fBmatch\fP [\fB\-E\fP|\fB\-F\fP] \fIPATTERN\fP \fISTRING\fP...
 .SH "OPTIONS"
 .sp
 \fB\-E\fP
@@ -45,21 +45,16 @@ If specified along with \fB\-F\fP, the last specified argument takes priority.
 Use a fixed, literal string. This corresponds to grep(1)\(aqs \-F option.
 If specified along with \fB\-E\fP, the last specified argument takes priority.
 .RE
-.sp
-\fB\-a\fP
-.RS 4
-Check if \fIany\fP string matches, not all.
-.RE
 .SH "EXIT STATUS"
 .sp
 \fB0\fP
 .RS 4
-All strings matched. If \fB\-a\fP was given, there was at least one match.
+All strings matched the pattern.
 .RE
 .sp
 \fB1\fP
 .RS 4
-There was not a match.
+At least one string did not match the pattern.
 .RE
 .SH "EXAMPLES"
 .sp
@@ -128,7 +123,7 @@ There\(cqs an IRC channel for this and other utilities at \c
 Please don\(cqt hesitate to message if you have questions.
 .SH "LICENSE"
 .sp
-\fBmatch\fP is in the public domain.
+\fBidioms\fP is in the public domain.
 .sp
 To the extent possible under law, Kylie McClain has waived all copyright and related or neighboring
 rights to this work.

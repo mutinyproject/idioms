@@ -1,0 +1,62 @@
+= match(1)
+
+== Name
+
+match - succeed if all strings match a given pattern
+
+== Synopsis
+
+*match* [*-E*|*-F*] _PATTERN_ _STRING_...
+
+== Options
+
+*-E*::
+    Use extended regular expressions. This corresponds to grep(1)'s -E option.
+    If specified along with *-F*, the last specified argument takes priority.
+
+*-F*::
+    Use a fixed, literal string. This corresponds to grep(1)'s -F option.
+    If specified along with *-E*, the last specified argument takes priority.
+
+== Exit status
+
+*0*::
+    All strings matched the pattern.
+
+*1*::
+    At least one string did not match the pattern.
+
+== Examples
+
+[source,shell]
+----
+if match -E "[0-9]{4}-[0-9]{2}-[0-9]{2}" "1998-05-28";then
+    echo "that was a date!"
+else
+    echo "please give a date instead"
+fi
+----
+
+== Rationale
+
+The goal of match(1) is to prevent ugly regular expression matching in scripts. There's a few
+ways to do this.
+
+* With expr(1)'s match function, which doesn't support extended regular expressions or fixed
+  strings, and has added baggage due to POSIX.
+* With grep(1) reading from standard input, counting the amount of matches. This is how match(1)
+  actually does it internally, but it looks pretty ugly and there's a multitude of ways to do this
+  one simple task with it. One could also check the output of grep(1) to see if it outputs
+  anything.
+* Usage of bash(1)'s `=~` test as part of its `[[` syntax.
+
+With the exception of bash, most of these are pretty ugly. There's no need for a shell extension, as
+this is something which certainly can be done POSIXly; using match(1), this becomes a more uniform
+action to perform as there's just one way to do it and it's not a particularly ugly way either.
+This leads to more readable scripts with less magic-looking code.
+
+== See also
+
+expr(1), grep(1)
+
+include::footer.adoc[]
