@@ -1,0 +1,52 @@
+IDIOMS(7)                      Mutineer's Guide                      IDIOMS(7)
+
+
+
+NAME
+       idioms - overview of idiomatic utilities for scripting
+
+DESCRIPTION
+       idioms is a set of useful utilities designed to make scripting more
+       idiomatic, and make shell usage perhaps so too. It’s akin to moreutils,
+       but the main goal is to standardize common tasks, improve code quality
+       and quality of life.
+
+       idioms consists of these utilities:
+
+       idioms(1)
+           functions
+
+       match(1)
+           check that a string matches a pattern
+
+DEPENDENCIES
+       Build
+
+       •   make(1)
+
+       •   sed(1)
+
+       Runtime
+
+       •   A POSIX-compliant shell. (ex. bash(1), dash(1), mksh(1), busybox
+           ash, etc.)
+
+           •   An implementation of the POSIX-defined printf command. This
+               might be provided by the shell but it can also just be a
+               regular command without issue.
+
+       •   A POSIX-compliant grep.
+
+       Development
+
+       •   shellspec <https://github.com/shellspec/shellspec>, if you wish to
+           run tests.
+
+       •   shellcheck(1), if you wish to lint files.
+
+       •   asciidoctor(1), if you wish to regenerate manual pages (HTML, or
+           manpage format).
+
+
+
+Mutiny                            2020-06-09                         IDIOMS(7)

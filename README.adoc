@@ -1,1 +1,0 @@
-man/idioms.7.adoc

@@ -2,12 +2,12 @@
 .\"     Title: match
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-02-27
-.\"    Manual: \ \&
-.\"    Source: \ \&
+.\"      Date: 2020-06-10
+.\"    Manual: Mutineer's Guide
+.\"    Source: Mutiny
 .\"  Language: English
 .\"
-.TH "MATCH" "1" "2020-02-27" "\ \&" "\ \&"
+.TH "MATCH" "1" "2020-06-10" "Mutiny" "Mutineer\(aqs Guide"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -31,17 +31,19 @@
 match \- return 0 if all strings match the pattern given, return 1 if they do not.
 .SH "SYNOPSIS"
 .sp
-\fBmatch\fP [\fIOPTIONS\fP] \fIPATTERN\fP \fISTRING\fP...
+\fBmatch\fP [\fB\-E\fP|\fB\-F\fP] [\fB\-a\fP] \fIPATTERN\fP \fISTRING\fP...
 .SH "OPTIONS"
 .sp
 \fB\-E\fP
 .RS 4
 Use extended regular expressions. This corresponds to grep(1)\(aqs \-E option.
+If specified along with \fB\-F\fP, the last specified argument takes priority.
 .RE
 .sp
 \fB\-F\fP
 .RS 4
 Use a fixed, literal string. This corresponds to grep(1)\(aqs \-F option.
+If specified along with \fB\-E\fP, the last specified argument takes priority.
 .RE
 .sp
 \fB\-a\fP
@@ -72,7 +74,7 @@ fi
 .if n .RE
 .SH "RATIONALE"
 .sp
-The goal of \fBmatch\fP(1) is to prevent ugly regular expression matching in scripts. There\(cqs a few
+The goal of match(1) is to prevent ugly regular expression matching in scripts. There\(cqs a few
 ways to do this.
 .sp
 .RS 4
@@ -83,7 +85,7 @@ ways to do this.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-With \fBexpr\fP(1)\(aqs match function, which doesn\(cqt support extended regular expressions or fixed
+With expr(1)\(aqs match function, which doesn\(cqt support extended regular expressions or fixed
 strings, and has added baggage due to POSIX.
 .RE
 .sp
@@ -95,9 +97,9 @@ strings, and has added baggage due to POSIX.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-With \fBgrep\fP(1) reading from standard input, counting the amount of matches. This is how match(1)
+With grep(1) reading from standard input, counting the amount of matches. This is how match(1)
 actually does it internally, but it looks pretty ugly and there\(cqs a multitude of ways to do this
-one simple task with it. One could also check the output of \fBgrep\fP(1) to see if it outputs
+one simple task with it. One could also check the output of grep(1) to see if it outputs
 anything.
 .RE
 .sp
@@ -109,16 +111,16 @@ anything.
 .  sp -1
 .  IP \(bu 2.3
 .\}
-Usage of \fBbash\fP(1)\(aqs \f(CR=~\fP test as part of its \f(CR[[\fP syntax.
+Usage of bash(1)\(aqs \f(CR=~\fP test as part of its \f(CR[[\fP syntax.
 .RE
 .sp
-With the exception of \fBbash\fP(1), most of these are pretty ugly. There\(cqs no need for a shell
-extension, as this is something which certainly can be done POSIXly; using \fBmatch\fP(1), this becomes
-a more uniform action to perform as there\(cqs just one way to do it and it\(cqs not a particularly ugly
-way either. This leads to more readable scripts with less magic\-looking code.
+With the exception of bash, most of these are pretty ugly. There\(cqs no need for a shell extension, as
+this is something which certainly can be done POSIXly; using match(1), this becomes a more uniform
+action to perform as there\(cqs just one way to do it and it\(cqs not a particularly ugly way either.
+This leads to more readable scripts with less magic\-looking code.
 .SH "SEE ALSO"
 .sp
-\fBexpr\fP(1), \fBgrep\fP(1)
+expr(1), grep(1)
 .SH "BUGS"
 .sp
 There\(cqs an IRC channel for this and other utilities at \c

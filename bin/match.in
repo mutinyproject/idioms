@@ -8,7 +8,6 @@ unset GREP_OPTIONS
 
 all=true
 any=
-pattern_type=
 
 while getopts :EFa arg >/dev/null 2>&1; do
     case "${arg}" in
@@ -19,8 +18,11 @@ while getopts :EFa arg >/dev/null 2>&1; do
             pattern_type=-F
             ;;
         a)
-            all=
             any=true
+            all=
+            ;;
+        -)
+            break
             ;;
         ?)
             error "unknown argument -- %s\n" "${OPTARG}"
@@ -35,5 +37,5 @@ shift $((OPTIND - 1))
 
 pattern="${1}"; shift
 
-test $(printf '%s\n' "$@" | grep ${pattern_type} -c ${all:+-v} -- "${pattern}") ${all:+-eq 0}${any:+-ne 0} || exit 1
+[ $(printf '%s\n' "$@" | grep ${pattern_type} -c ${all:+-v} -- "${pattern}") ${all:+-eq 0}${any:+-ne 0} ] || exit 1
 

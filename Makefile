@@ -2,109 +2,103 @@ name = idioms
 version = 20200227
 
 prefix ?= /usr/local
-bindir ?= $(prefix)/bin
-datadir ?= $(prefix)/share
-libdir ?= $(prefix)/lib
-mandir ?= $(datadir)/man
-man1dir ?= $(mandir)/man1
-man7dir ?= $(mandir)/man7
+bindir ?= ${prefix}/bin
+datadir ?= ${prefix}/share
+libdir ?= ${prefix}/lib
+mandir ?= ${datadir}/man
+man1dir ?= ${mandir}/man1
+man3dir ?= ${mandir}/man3
 
-libdir := $(libdir)/$(name)
+-include config.mk
 
-BINS := $(patsubst %.in, %, $(wildcard bin/*.in))
-LIBS := $(patsubst %.in, %, $(wildcard lib/*.in))
-MANS := $(patsubst %.adoc, %, $(wildcard man/*.adoc))
-MAN1S := $(patsubst %.adoc, %, $(wildcard man/*.1.adoc))
-MAN7S := $(patsubst %.adoc, %, $(wildcard man/*.7.adoc))
-HTMLS := $(patsubst %.adoc, %.html, $(wildcard man/*.adoc))
+libdir := ${libdir}/${name}
 
-INSTALLS := \
-    $(addprefix $(DESTDIR)$(bindir)/,$(BINS:bin/%=%)) \
-    $(addprefix $(DESTDIR)$(libdir)/,$(LIBS:lib/%=%)) \
-    $(addprefix $(DESTDIR)$(man1dir)/,$(MAN1S:man/%=%)) \
-    $(addprefix $(DESTDIR)$(man7dir)/,$(MAN7S:man/%=%))
+BINS = \
+    idioms \
+    integer \
+    lastarg \
+    match
 
-.PHONY: all
-all: bin lib man
+LIBS = \
+    idioms.sh
 
-.PHONY: clean
-clean:
-	rm -f $(BINS) $(LIBS) $(MANS) $(HTMLS)
+MAN1 = ${BINS:=.1}
+MAN3 = ${LIBS:.sh=.3}
+MANS = ${MAN1} ${MAN3}
+HTMLS = ${MANS:=.html}
 
-.PHONY: install
-install: $(INSTALLS)
+ASCIIDOCTOR ?= asciidoctor
+ASCIIDOCTOR += --failure-level=WARNING
+ASCIIDOCTOR += -a manmanual="Mutineer's Guide"
+ASCIIDOCTOR += -a mansource="Mutiny"
 
-.PHONY: lint
-lint:
-	printf '%s\n' $(patsubst %,%.in,$(BINS)) $(patsubst %,%.in,$(LIBS)) | xargs shellcheck
+all: FRC ${BINS} ${LIBS} ${MANS}
+dev: FRC README all lint check
 
-.PHONY: test
-test: check
+bin: FRC ${BINS}
+lib: FRC ${LIBS}
+man: FRC ${MANS}
+html: FRC ${HTMLS}
 
-.PHONY: check
-check: bin lib
-	shellspec $(SHELLSPEC_FLAGS)
+# NOTE: disable built-in rules which otherwise mess up creating .sh files
+.SUFFIXES:
 
-.PHONY: maint
-maint: lint check
-
-.PHONY: bin
-bin: $(BINS)
-
-.PHONY: lib
-lib: $(LIBS)
-
-.PHONY: man
-man: $(MANS)
-
-.PHONY: html
-html: $(HTMLS)
-
-bin/%: bin/%.in
+.SUFFIXES: .in
+.in:
 	sed \
-	    -e "s|@@name@@|$(name)|g" \
-	    -e "s|@@version@@|$(version)|g" \
-	    -e "s|@@prefix@@|$(prefix)|g" \
-	    -e "s|@@bindir@@|$(bindir)|g" \
-	    -e "s|@@libdir@@|\$${IDIOMS_LIBDIR:-$(libdir)}|g" \
-	    -e "s|@@mandir@@|$(mandir)|g" \
-	    -e "s|@@man1dir@@|$(man1dir)|g" \
-	    -e "s|@@man7dir@@|$(man7dir)|g" \
-	    $< > $@.temp
-	chmod +x $@.temp
-	mv -f $@.temp $@
+	    -e "s|@@name@@|${name}|g" \
+	    -e "s|@@version@@|${version}|g" \
+	    -e "s|@@prefix@@|${prefix}|g" \
+	    -e "s|@@bindir@@|${bindir}|g" \
+	    -e "s|@@libdir@@|${libdir}|g" \
+	    -e "s|@@mandir@@|${mandir}|g" \
+	    -e "s|@@man1dir@@|${man1dir}|g" \
+	    -e "s|@@man3dir@@|${man3dir}|g" \
+	    $< > $@
+	chmod +x $@
 
-lib/%: lib/%.in
+.sh:
 	sed \
-	    -e "s|@@name@@|$(name)|g" \
-	    -e "s|@@version@@|$(version)|g" \
-	    -e "s|@@prefix@@|$(prefix)|g" \
-	    -e "s|@@bindir@@|$(bindir)|g" \
-	    -e "s|@@libdir@@|\$${IDIOMS_LIBDIR:-$(libdir)}|g" \
-	    -e "s|@@mandir@@|$(mandir)|g" \
-	    -e "s|@@man1dir@@|$(man1dir)|g" \
-	    -e "s|@@man7dir@@|$(man7dir)|g" \
-	    $< > $@.temp
-	chmod +x $@.temp
-	mv -f $@.temp $@
+	    -e "s|@@name@@|${name}|g" \
+	    -e "s|@@version@@|${version}|g" \
+	    -e "s|@@prefix@@|${prefix}|g" \
+	    -e "s|@@bindir@@|${bindir}|g" \
+	    -e "s|@@libdir@@|${libdir}|g" \
+	    -e "s|@@mandir@@|${mandir}|g" \
+	    -e "s|@@man1dir@@|${man1dir}|g" \
+	    -e "s|@@man3dir@@|${man3dir}|g" \
+	    $< > $@
 
-.DELETE_ON_ERROR: man/%.html
-man/%.html: man/%.adoc man/footer.adoc.template
-	asciidoctor --failure-level=WARNING -b html5 -B $(PWD) -d manpage -o $@ $<
+.SUFFIXES: .adoc
+.html.adoc:
+	${ASCIIDOCTOR} -b html5 -d manpage -o $@ $<
 
-.DELETE_ON_ERROR: man/%
-man/%: man/%.adoc man/footer.adoc.template
-	asciidoctor --failure-level=WARNING -b manpage -B $(PWD) -d manpage -o $@ $<
+.adoc:
+	${ASCIIDOCTOR} -b manpage -d manpage -o $@ $<
 
-$(DESTDIR)$(bindir)/%: bin/%
-	install -D $< $@
+install: FRC all
+	install -d \
+	    ${DESTDIR}${bindir} \
+	    ${DESTDIR}${libdir} \
+	    ${DESTDIR}${mandir} \
+	    ${DESTDIR}${man1dir} \
+	    ${DESTDIR}${man3dir}
 
-$(DESTDIR)$(libdir)/%: lib/%
-	install -D -m 0644 $< $@
+	for bin in ${BINS}; do install -m0755 $${bin} ${DESTDIR}${bindir}; done
+	for lib in ${LIBS}; do install -m0644 $${lib} ${DESTDIR}${libdir}; done
+	for man1 in ${MAN1}; do install -m0644 $${man1} ${DESTDIR}${man1dir}; done
+	for man3 in ${MAN3}; do install -m0644 $${man3} ${DESTDIR}${man3dir}; done
 
-$(DESTDIR)$(man1dir)/%: man/%
-	install -D -m 0644 $< $@
+clean: FRC
+	rm -f ${BINS} ${LIBS} ${MANS} ${HTMLS}
 
-$(DESTDIR)$(man7dir)/%: man/%
-	install -D -m 0644 $< $@
+README: idioms.3
+	man ./$< | col -bx > README
 
+lint: FRC ${BINS} ${LIBS}
+	shellcheck ${BINS} ${LIBS}
+
+check: FRC ${BINS} ${LIBS}
+	shellspec ${SHELLSPEC_FLAGS}
+
+FRC:
