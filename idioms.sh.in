@@ -1,0 +1,235 @@
+#!/bin/sh
+
+# SC2059: Allow usage of the ${text_*} variables in printf.
+# SC2034: Allow unused text_* variables.
+# shellcheck disable=SC2034,SC2059
+
+# See <https://no-color.org/>.
+: "${NO_COLOR:=}"
+
+stderr() {
+    # Variables are used intentionally here because the function is supposed to act like printf(1).
+    # shellcheck disable=SC2059
+    printf -- "$@" >&2
+}
+
+note() {
+    _idioms_msg="${1}"
+    shift
+
+    printf -- "${text_bold}${text_fg_blue}note${text_reset}: ${_idioms_msg}\n" "$@"
+}
+
+warning() {
+    _idioms_msg="${1}"
+    shift
+
+    stderr "${text_bold}${text_fg_yellow}warning${text_reset}: ${_idioms_msg}\n" "$@"
+}
+
+error() {
+    _idioms_die=false
+    _idioms_errno=1
+
+    while getopts :de: _idioms_arg >/dev/null 2>&1; do
+        case "${_idioms_arg}" in
+            d)
+                _idioms_die=true
+                ;;
+            e)
+                _idioms_errno="${OPTARG}"
+                ;;
+            ?)
+                error "unknown argument -- %s\n" "${OPTARG}"
+                return 127
+                ;;
+        esac
+    done
+
+    shift $(( OPTIND - 1 ))
+
+    if [ $# -eq 0 ];then
+        stderr "usage: %s [-d] [-e ERRNO] FORMAT\n" "error"
+        return 127
+    fi
+
+    _idioms_msg="${1}"
+    shift
+
+    stderr "${text_bold}${text_fg_red}error${text_reset}: ${_idioms_msg}\n" "$@"
+    "${_idioms_die}" && exit "${_idioms_errno}"
+
+    return "${_idioms_errno}"
+}
+
+die() {
+    _idioms_errno=1
+
+    while getopts :e: _idioms_arg >/dev/null 2>&1; do
+        case "${_idioms_arg}" in
+            e)
+                _idioms_errno="${OPTARG}"
+                ;;
+            ?)
+                error "unknown argument -- %s\n" "${OPTARG}"
+                stderr "usage: %s [-e ERRNO] [FORMAT]" "die"
+                return 127
+                ;;
+        esac
+    done
+    shift $(( OPTIND - 1 ))
+
+    if [ $# -gt 0 ]; then
+        _idioms_msg="${1}"
+        shift
+
+        stderr "${text_bold}${text_fg_red}dying${text_reset}: ${_idioms_msg}\n" "$@"
+    fi
+
+    exit "${_idioms_errno}"
+}
+
+call() {
+    _idioms_dry_run=false
+    _idioms_keep_going=false
+    _idioms_err_code=
+
+    # NOTE: usage of getopts(1) here is unusual because we don't want to parse any of the options
+    #       after a command name, only *before*.
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --)
+                break
+                ;;
+            -*)
+                while getopts :kn _idioms_arg "$1" >/dev/null 2>&1; do
+                    case "${_idioms_arg}" in
+                        k)
+                            _idioms_keep_going=true
+                            ;;
+                        n)
+                            _idioms_dry_run=true
+                            ;;
+                        ?)
+                            error "unknown argument -- %s\n" "${OPTARG}"
+                            return 127
+                            ;;
+                    esac
+                done
+                ;;
+            *)
+                break
+                ;;
+        esac
+
+        shift
+    done
+
+    stderr "+ %s\n" "$*"
+
+    # XXX: This looks kinda ugly.
+    if ! "${_idioms_dry_run}"; then
+        "$@" || {
+            _idioms_err_code=$?
+            if "${_idioms_keep_going}"; then
+                warning "command \`%s\` exited with %s" "$*" "${_idioms_err_code}"
+            else
+                error -d -e "${_idioms_err_code}" \
+                    "command \`%s\` exited with %s" "$*" "${_idioms_err_code}"
+            fi
+        }
+    fi
+}
+
+run() (
+    call "$@"
+)
+
+_idioms_setup_colors() {
+    if [ "${_idioms_colors}" = 'true' ] && [ -z "${NO_COLOR}" ] && \
+        command -v tput >/dev/null 2>&1; then
+        text_reset=$(tput sgr0 2>/dev/null)
+        text_fg_black=$(tput setaf 0 2>/dev/null)
+        text_fg_red=$(tput setaf 1 2>/dev/null)
+        text_fg_green=$(tput setaf 2 2>/dev/null)
+        text_fg_yellow=$(tput setaf 3 2>/dev/null)
+        text_fg_blue=$(tput setaf 4 2>/dev/null)
+        text_fg_magenta=$(tput setaf 5 2>/dev/null)
+        text_fg_cyan=$(tput setaf 6 2>/dev/null)
+        text_fg_white=$(tput setaf 7 2>/dev/null)
+        text_fg_bright_black=$(tput setaf 8 2>/dev/null)
+        text_fg_bright_red=$(tput setaf 9 2>/dev/null)
+        text_fg_bright_green=$(tput setaf 10 2>/dev/null)
+        text_fg_bright_yellow=$(tput setaf 11 2>/dev/null)
+        text_fg_bright_blue=$(tput setaf 12 2>/dev/null)
+        text_fg_bright_magenta=$(tput setaf 13 2>/dev/null)
+        text_fg_bright_cyan=$(tput setaf 14 2>/dev/null)
+        text_fg_bright_white=$(tput setaf 15 2>/dev/null)
+        text_bg_black=$(tput setab 0 2>/dev/null)
+        text_bg_red=$(tput setab 1 2>/dev/null)
+        text_bg_green=$(tput setab 2 2>/dev/null)
+        text_bg_yellow=$(tput setab 3 2>/dev/null)
+        text_bg_blue=$(tput setab 4 2>/dev/null)
+        text_bg_magenta=$(tput setab 5 2>/dev/null)
+        text_bg_cyan=$(tput setab 6 2>/dev/null)
+        text_bg_white=$(tput setab 7 2>/dev/null)
+        text_bg_bright_black=$(tput setab 8 2>/dev/null)
+        text_bg_bright_red=$(tput setab 9 2>/dev/null)
+        text_bg_bright_green=$(tput setab 10 2>/dev/null)
+        text_bg_bright_yellow=$(tput setab 11 2>/dev/null)
+        text_bg_bright_blue=$(tput setab 12 2>/dev/null)
+        text_bg_bright_magenta=$(tput setab 13 2>/dev/null)
+        text_bg_bright_cyan=$(tput setab 14 2>/dev/null)
+        text_bg_bright_white=$(tput setab 15 2>/dev/null)
+        text_bold=$(tput bold 2>/dev/null)
+        text_italic=$(tput sitm 2>/dev/null)
+        text_underline=$(tput smul 2>/dev/null)
+        text_invisible=$(tput invis 2>/dev/null)
+        PS4="${text_reset}${PS4}"
+    else
+        # Needed to prevent undefined variables.
+        text_reset=
+        text_fg_black=
+        text_fg_red=
+        text_fg_green=
+        text_fg_yellow=
+        text_fg_blue=
+        text_fg_magenta=
+        text_fg_cyan=
+        text_fg_white=
+        text_fg_bright_black=
+        text_fg_bright_red=
+        text_fg_bright_green=
+        text_fg_bright_yellow=
+        text_fg_bright_blue=
+        text_fg_bright_magenta=
+        text_fg_bright_cyan=
+        text_fg_bright_white=
+        text_bg_black=
+        text_bg_red=
+        text_bg_green=
+        text_bg_yellow=
+        text_bg_blue=
+        text_bg_magenta=
+        text_bg_cyan=
+        text_bg_white=
+        text_bg_bright_black=
+        text_bg_bright_red=
+        text_bg_bright_green=
+        text_bg_bright_yellow=
+        text_bg_bright_blue=
+        text_bg_bright_magenta=
+        text_bg_bright_cyan=
+        text_bg_bright_white=
+        text_bold=
+        text_italic=
+        text_underline=
+        text_invisible=
+    fi
+}
+
+: "${_idioms_colors:=false}"
+readonly _idioms_colors
+
+_idioms_setup_colors
+

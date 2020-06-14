@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$0" in
+    */idioms)
+        [ $# -gt 0 ] && printf 'usage: . %s\n' "idioms" && exit 127
+        exec cat "@@libdir@@/idioms.sh"
+        ;;
+    *)
+        # shellcheck source=./idioms.sh
+        . "@@libdir@@/idioms.sh"
+        ;;
+esac
+
