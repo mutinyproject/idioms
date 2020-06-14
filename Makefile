@@ -99,7 +99,7 @@ README: idioms.7
 	man ./$< | col -bx > README
 
 lint: FRC ${BINS} ${LIBS}
-	shellcheck ${BINS} ${LIBS}
+	shellcheck ${BINS:=.in} ${LIBS:=.in}
 
 check: FRC ${BINS} ${LIBS}
 	shellspec ${SHELLSPEC_FLAGS}
