@@ -36,6 +36,8 @@ ASCIIDOCTOR += --failure-level=WARNING
 ASCIIDOCTOR += -a manmanual="Mutineer's Guide - ${name}"
 ASCIIDOCTOR += -a mansource="Mutiny"
 
+SHELLSPEC_FLAGS ?= --format tap
+
 all: FRC ${BINS} ${LIBS} ${MANS}
 dev: FRC README all lint check
 
