@@ -1,5 +1,5 @@
 name = idioms
-version = 20200227
+version = 20200614
 
 prefix ?= /usr/local
 bindir ?= ${prefix}/bin
