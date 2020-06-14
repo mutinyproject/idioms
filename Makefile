@@ -10,10 +10,13 @@ man1dir ?= ${mandir}/man1
 man3dir ?= ${mandir}/man3
 
 ASCIIDOCTOR ?= asciidoctor
-ASCIIDOCTOR += --failure-level=WARNING
-ASCIIDOCTOR += -a manmanual="Mutineer's Guide - ${name}"
-ASCIIDOCTOR += -a mansource="Mutiny"
+ASCIIDOCTOR_FLAGS := --failure-level=WARNING
+ASCIIDOCTOR_FLAGS += -a manmanual="Mutineer's Guide - ${name}"
+ASCIIDOCTOR_FLAGS += -a mansource="Mutiny"
 
+SHELLCHECK ?= shellcheck
+
+SHELLSPEC ?= shellspec
 SHELLSPEC_FLAGS ?= --format tap
 
 -include config.mk
@@ -103,9 +106,9 @@ README: idioms.7
 	man ./$< | col -bx > README
 
 lint: FRC ${BINS} ${LIBS}
-	shellcheck ${BINS:=.in} ${LIBS:=.in}
+	${SHELLCHECK} ${BINS:=.in} ${LIBS:=.in}
 
 check: FRC ${BINS} ${LIBS}
-	shellspec ${SHELLSPEC_FLAGS}
+	${SHELLSPEC} ${SHELLSPEC_FLAGS}
 
 FRC:
