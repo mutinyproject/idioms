@@ -1,0 +1,36 @@
+= idioms(7)
+
+== Name
+
+idioms - overview of idiomatic utilities for scripting
+
+== Description
+
+*idioms* is a set of useful utilities and functions designed to make scripting more idiomatic.
+It's akin to `moreutils`, but the main goal is to standardize common tasks, improve code quality
+
+*idioms* consists of these utilities:
+
+idioms(1)::   functions
+match(1)::    check that a string matches a pattern
+
+== Dependencies
+
+.Build
+* make(1)
+
+.Runtime
+* A POSIX-compliant shell. (ex. bash(1), dash(1), mksh(1), busybox `ash`, etc.)
+    ** An implementation of the POSIX-defined `printf` command. This might be provided by the shell
+       but it can also just be a regular command without issue.
+* If you wish to use the color functionality, you need a tput(1) command, likely provided by
+  https://invisible-island.net/ncurses/[ncurses] or
+  https://github.com/sabotage-linux/netbsd-curses[NetBSD's curses].
+* For match(1): A POSIX-compliant `grep`.
+
+.Development
+* https://github.com/shellspec/shellspec[`shellspec`], if you wish to run tests.
+* shellcheck(1), if you wish to lint files.
+* asciidoctor(1), if you wish to regenerate manual pages (HTML, or manpage format).
+
+include::footer.adoc[]

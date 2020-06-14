@@ -24,12 +24,15 @@ LIBS = \
 
 MAN1 = ${BINS:=.1}
 MAN3 = ${LIBS:.sh=.3}
-MANS = ${MAN1} ${MAN3}
+MAN7 = \
+    idioms.7
+
+MANS = ${MAN1} ${MAN3} ${MAN7}
 HTMLS = ${MANS:=.html}
 
 ASCIIDOCTOR ?= asciidoctor
 ASCIIDOCTOR += --failure-level=WARNING
-ASCIIDOCTOR += -a manmanual="Mutineer's Guide"
+ASCIIDOCTOR += -a manmanual="Mutineer's Guide - ${name}"
 ASCIIDOCTOR += -a mansource="Mutiny"
 
 all: FRC ${BINS} ${LIBS} ${MANS}
@@ -92,7 +95,7 @@ install: FRC all
 clean: FRC
 	rm -f ${BINS} ${LIBS} ${MANS} ${HTMLS}
 
-README: idioms.3
+README: idioms.7
 	man ./$< | col -bx > README
 
 lint: FRC ${BINS} ${LIBS}

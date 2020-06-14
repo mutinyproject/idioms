@@ -1,0 +1,22 @@
+= idioms(1)
+
+== Name
+
+idioms - setup usage of idioms functions in a script
+
+== Synopsis
+
+. *idioms*
+
+== Description
+
+This command is used to allow for including functions from *idioms* without depending on a file
+path. *idioms* should be located in the user's _PATH_ somewhere.
+
+See idioms(3) for an explanation of the functions *idioms* provides.
+
+== See also
+
+idioms(3)
+
+include::footer.adoc[]

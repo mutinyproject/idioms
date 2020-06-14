@@ -1,0 +1,157 @@
+= idioms(3)
+
+== Name
+
+idioms - useful functions that work within a script runtime
+
+== Synopsis
+
+`. *idioms*`
+
+== Description
+
+*idioms* is a small sh(1) language library for commonly needed functions, for flow management as
+well as making pretty output easier.
+
+== Functions
+
+The following is usage for all functions within the *idioms* library.
+
+=== *die*
+
+die - die, printing a message to standard error if given
+
+==== Synopsis
+
+*die* [*-e* _ERRNO_] [_FORMAT_]
+
+==== Options
+
+*-e _ERRNO_*::
+    Exit with _ERRNO_ as status. If unspecified, *die* exits successfully (0).
+
+=== *error*
+
+error - print an error (using stderr), appending a newline
+
+==== Synopsis
+
+*error* [*-d*] [*-e* _ERRNO_] _FORMAT_
+
+==== Options
+
+*-d*::
+    Die after printing the error.
+
+*-e* _ERRNO_::
+    Return _ERRNO_ after printing the error. If *-d* is given, exit with _ERRNO_ instead.
+
+=== *note*
+
+note - print a note (using printf(1)), appending a newline
+
+==== Synopsis
+
+note _FORMAT_
+
+=== *call*
+
+call - print command to standard error, run it, `die` if it doesn't exit successfully
+
+==== Synopsis
+
+call [*-kn*] _COMMAND_
+
+==== Options
+
+*-k*::
+    Keep going if the command fails, don't `die`.
+
+*-n*::
+    Don't actually run the command, just print it. You may also set __idioms_call_dry_run_ to do
+    the same.
+
+=== *stderr*
+
+stderr - printf(1), redirected to standard error
+
+==== Synopsis
+
+*stderr* _FORMAT_
+
+=== *warning*
+
+warning - print a warning to standard error
+
+==== Synopsis
+
+*warning* _FORMAT_
+
+== Variables
+
+Scripts using *idioms* may not specify their own variables prefixed with __idioms_.
+Additionally, these variables may not be modified after the *idioms* script is sourced.
+
+*_idioms_call_dry_run*::
+    Always run *call* with the *-n* (dry run) option set.
+
+*_idioms_colors*::
+    Set color variables (see _COLORS_ section below). If not specified, by the color variables are
+    left undefined, since setting color variables by default would cause a small startup delay due
+    to all the invocations to tput(1).
+
+== Colors
+
+One feature of *idioms* is providing access to text formatting codes through variables that degrade
+gracefully when color is disabled.
+
+When the variables ___idioms_colors__ or __NO_COLOR__ are set, all variables listed are set,
+but empty.
+
+[options="header"]
+|===
+|Variable|terminfo(5) capability|Default color/formatting
+|_text_reset_|sgr0|Reset all colors
+|_text_bold_|bold|Embolden text
+|_text_italic_|sitm|Italicize text
+|_text_underline_|smul|Underline text
+|_text_invisible_|invis|Invisible text
+|_text_fg_black_|setaf 0|Black
+|_text_fg_red_|setaf 1|Red
+|_text_fg_green_|setaf 2|Foreground - Green
+|_text_fg_yellow_|setaf 3|Foreground - Yellow
+|_text_fg_blue_|setaf 4|Foreground - Blue
+|_text_fg_magenta_|setaf 5|Foreground - Magenta
+|_text_fg_cyan_|setaf 6|Foreground - Cyan
+|_text_fg_white_|setaf 7|Foreground - White
+|_text_fg_bright_black_|setaf 8|Foreground - Bright Black
+|_text_fg_bright_red_|setaf 9|Foreground - Bright Red
+|_text_fg_bright_green_|setaf 10|Foreground - Bright Green
+|_text_fg_bright_yellow_|setaf 11|Foreground - Bright Yellow
+|_text_fg_bright_blue_|setaf 12|Foreground - Bright Blue
+|_text_fg_bright_magenta_|setaf 13|Foreground - Bright Magenta
+|_text_fg_bright_cyan_|setaf 14|Foreground - Bright Cyan
+|_text_fg_bright_white_|setaf 15|Foreground - Bright White
+|_text_bg_black_|setab 0|Background - Black
+|_text_bg_red_|setab 1|Background - Red
+|_text_bg_green_|setab 2|Background - Green
+|_text_bg_yellow_|setab 3|Background - Yellow
+|_text_bg_blue_|setab 4|Background - Blue
+|_text_bg_magenta_|setab 5|Background - Magenta
+|_text_bg_cyan_|setab 6|Background - Cyan
+|_text_bg_white_|setab 7|Background - White
+|_text_bg_bright_black_|setab 8|Background - Bright Black
+|_text_bg_bright_red_|setab 9|Background - Bright Red
+|_text_bg_bright_green_|setab 10|Background - Bright Green
+|_text_bg_bright_yellow_|setab 11|Background - Bright Yellow
+|_text_bg_bright_blue_|setab 12|Background - Bright Blue
+|_text_bg_bright_magenta_|setab 13|Background - Bright Magenta
+|_text_bg_bright_cyan_|setab 14|Background - Bright Cyan
+|_text_bg_bright_white_|setab 15|Background - Bright White
+|===
+
+== See also
+
+idioms(1), printf(1), terminfo(5), idioms(7)
+
+include::footer.adoc[]

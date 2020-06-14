@@ -1,0 +1,530 @@
+'\" t
+.\"     Title: idioms
+.\"    Author: [see the "AUTHOR(S)" section]
+.\" Generator: Asciidoctor 2.0.10
+.\"      Date: 2020-06-13
+.\"    Manual: Mutineer's Guide - idioms
+.\"    Source: Mutiny
+.\"  Language: English
+.\"
+.TH "IDIOMS" "3" "2020-06-13" "Mutiny" "Mutineer\(aqs Guide \- idioms"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+idioms \- useful functions that work within a script runtime
+.SH "SYNOPSIS"
+.sp
+\f(CR. \fBidioms\fP\fP
+.SH "DESCRIPTION"
+.sp
+\fBidioms\fP is a small sh(1) language library for commonly needed functions, for flow management as
+well as making pretty output easier.
+.SH "FUNCTIONS"
+.sp
+The following is usage for all functions within the \fBidioms\fP library.
+.SS "\fBdie\fP"
+.sp
+die \- die, printing a message to standard error if given
+.SS "Synopsis"
+.sp
+\fBdie\fP [\fB\-e\fP \fIERRNO\fP] [\fIFORMAT\fP]
+.SS "Options"
+.sp
+\fB\-e \fIERRNO\fP\fP
+.RS 4
+Exit with \fIERRNO\fP as status. If unspecified, \fBdie\fP exits successfully (0).
+.RE
+.SS "\fBerror\fP"
+.sp
+error \- print an error (using stderr), appending a newline
+.SS "Synopsis"
+.sp
+\fBerror\fP [\fB\-d\fP] [\fB\-e\fP \fIERRNO\fP] \fIFORMAT\fP
+.SS "Options"
+.sp
+\fB\-d\fP
+.RS 4
+Die after printing the error.
+.RE
+.sp
+\fB\-e\fP \fIERRNO\fP
+.RS 4
+Return \fIERRNO\fP after printing the error. If \fB\-d\fP is given, exit with \fIERRNO\fP instead.
+.RE
+.SS "\fBnote\fP"
+.sp
+note \- print a note (using printf(1)), appending a newline
+.SS "Synopsis"
+.sp
+note \fIFORMAT\fP
+.SS "\fBcall\fP"
+.sp
+call \- print command to standard error, run it, \f(CRdie\fP if it doesn\(cqt exit successfully
+.SS "Synopsis"
+.sp
+call [\fB\-kn\fP] \fICOMMAND\fP
+.SS "Options"
+.sp
+\fB\-k\fP
+.RS 4
+Keep going if the command fails, don\(cqt \f(CRdie\fP.
+.RE
+.sp
+\fB\-n\fP
+.RS 4
+Don\(cqt actually run the command, just print it. You may also set \fI_idioms_call_dry_run\fP to do
+the same.
+.RE
+.SS "\fBstderr\fP"
+.sp
+stderr \- printf(1), redirected to standard error
+.SS "Synopsis"
+.sp
+\fBstderr\fP \fIFORMAT\fP
+.SS "\fBwarning\fP"
+.sp
+warning \- print a warning to standard error
+.SS "Synopsis"
+.sp
+\fBwarning\fP \fIFORMAT\fP
+.SH "VARIABLES"
+.sp
+Scripts using \fBidioms\fP may not specify their own variables prefixed with \fI_idioms\fP.
+Additionally, these variables may not be modified after the \fBidioms\fP script is sourced.
+.sp
+\fB_idioms_call_dry_run\fP
+.RS 4
+Always run \fBcall\fP with the \fB\-n\fP (dry run) option set.
+.RE
+.sp
+\fB_idioms_colors\fP
+.RS 4
+Set color variables (see \fICOLORS\fP section below). If not specified, by the color variables are
+left undefined, since setting color variables by default would cause a small startup delay due
+to all the invocations to tput(1).
+.RE
+.SH "COLORS"
+.sp
+One feature of \fBidioms\fP is providing access to text formatting codes through variables that degrade
+gracefully when color is disabled.
+.sp
+When the variables \fI_idioms_colors\fP or \fINO_COLOR\fP are set, all variables listed are set,
+but empty.
+.TS
+allbox tab(:);
+lt lt lt.
+T{
+.sp
+Variable
+T}:T{
+.sp
+terminfo(5) capability
+T}:T{
+.sp
+Default color/formatting
+T}
+T{
+.sp
+\fItext_reset\fP
+T}:T{
+.sp
+sgr0
+T}:T{
+.sp
+Reset all colors
+T}
+T{
+.sp
+\fItext_bold\fP
+T}:T{
+.sp
+bold
+T}:T{
+.sp
+Embolden text
+T}
+T{
+.sp
+\fItext_italic\fP
+T}:T{
+.sp
+sitm
+T}:T{
+.sp
+Italicize text
+T}
+T{
+.sp
+\fItext_underline\fP
+T}:T{
+.sp
+smul
+T}:T{
+.sp
+Underline text
+T}
+T{
+.sp
+\fItext_invisible\fP
+T}:T{
+.sp
+invis
+T}:T{
+.sp
+Invisible text
+T}
+T{
+.sp
+\fItext_fg_black\fP
+T}:T{
+.sp
+setaf 0
+T}:T{
+.sp
+Black
+T}
+T{
+.sp
+\fItext_fg_red\fP
+T}:T{
+.sp
+setaf 1
+T}:T{
+.sp
+Red
+T}
+T{
+.sp
+\fItext_fg_green\fP
+T}:T{
+.sp
+setaf 2
+T}:T{
+.sp
+Foreground \- Green
+T}
+T{
+.sp
+\fItext_fg_yellow\fP
+T}:T{
+.sp
+setaf 3
+T}:T{
+.sp
+Foreground \- Yellow
+T}
+T{
+.sp
+\fItext_fg_blue\fP
+T}:T{
+.sp
+setaf 4
+T}:T{
+.sp
+Foreground \- Blue
+T}
+T{
+.sp
+\fItext_fg_magenta\fP
+T}:T{
+.sp
+setaf 5
+T}:T{
+.sp
+Foreground \- Magenta
+T}
+T{
+.sp
+\fItext_fg_cyan\fP
+T}:T{
+.sp
+setaf 6
+T}:T{
+.sp
+Foreground \- Cyan
+T}
+T{
+.sp
+\fItext_fg_white\fP
+T}:T{
+.sp
+setaf 7
+T}:T{
+.sp
+Foreground \- White
+T}
+T{
+.sp
+\fItext_fg_bright_black\fP
+T}:T{
+.sp
+setaf 8
+T}:T{
+.sp
+Foreground \- Bright Black
+T}
+T{
+.sp
+\fItext_fg_bright_red\fP
+T}:T{
+.sp
+setaf 9
+T}:T{
+.sp
+Foreground \- Bright Red
+T}
+T{
+.sp
+\fItext_fg_bright_green\fP
+T}:T{
+.sp
+setaf 10
+T}:T{
+.sp
+Foreground \- Bright Green
+T}
+T{
+.sp
+\fItext_fg_bright_yellow\fP
+T}:T{
+.sp
+setaf 11
+T}:T{
+.sp
+Foreground \- Bright Yellow
+T}
+T{
+.sp
+\fItext_fg_bright_blue\fP
+T}:T{
+.sp
+setaf 12
+T}:T{
+.sp
+Foreground \- Bright Blue
+T}
+T{
+.sp
+\fItext_fg_bright_magenta\fP
+T}:T{
+.sp
+setaf 13
+T}:T{
+.sp
+Foreground \- Bright Magenta
+T}
+T{
+.sp
+\fItext_fg_bright_cyan\fP
+T}:T{
+.sp
+setaf 14
+T}:T{
+.sp
+Foreground \- Bright Cyan
+T}
+T{
+.sp
+\fItext_fg_bright_white\fP
+T}:T{
+.sp
+setaf 15
+T}:T{
+.sp
+Foreground \- Bright White
+T}
+T{
+.sp
+\fItext_bg_black\fP
+T}:T{
+.sp
+setab 0
+T}:T{
+.sp
+Background \- Black
+T}
+T{
+.sp
+\fItext_bg_red\fP
+T}:T{
+.sp
+setab 1
+T}:T{
+.sp
+Background \- Red
+T}
+T{
+.sp
+\fItext_bg_green\fP
+T}:T{
+.sp
+setab 2
+T}:T{
+.sp
+Background \- Green
+T}
+T{
+.sp
+\fItext_bg_yellow\fP
+T}:T{
+.sp
+setab 3
+T}:T{
+.sp
+Background \- Yellow
+T}
+T{
+.sp
+\fItext_bg_blue\fP
+T}:T{
+.sp
+setab 4
+T}:T{
+.sp
+Background \- Blue
+T}
+T{
+.sp
+\fItext_bg_magenta\fP
+T}:T{
+.sp
+setab 5
+T}:T{
+.sp
+Background \- Magenta
+T}
+T{
+.sp
+\fItext_bg_cyan\fP
+T}:T{
+.sp
+setab 6
+T}:T{
+.sp
+Background \- Cyan
+T}
+T{
+.sp
+\fItext_bg_white\fP
+T}:T{
+.sp
+setab 7
+T}:T{
+.sp
+Background \- White
+T}
+T{
+.sp
+\fItext_bg_bright_black\fP
+T}:T{
+.sp
+setab 8
+T}:T{
+.sp
+Background \- Bright Black
+T}
+T{
+.sp
+\fItext_bg_bright_red\fP
+T}:T{
+.sp
+setab 9
+T}:T{
+.sp
+Background \- Bright Red
+T}
+T{
+.sp
+\fItext_bg_bright_green\fP
+T}:T{
+.sp
+setab 10
+T}:T{
+.sp
+Background \- Bright Green
+T}
+T{
+.sp
+\fItext_bg_bright_yellow\fP
+T}:T{
+.sp
+setab 11
+T}:T{
+.sp
+Background \- Bright Yellow
+T}
+T{
+.sp
+\fItext_bg_bright_blue\fP
+T}:T{
+.sp
+setab 12
+T}:T{
+.sp
+Background \- Bright Blue
+T}
+T{
+.sp
+\fItext_bg_bright_magenta\fP
+T}:T{
+.sp
+setab 13
+T}:T{
+.sp
+Background \- Bright Magenta
+T}
+T{
+.sp
+\fItext_bg_bright_cyan\fP
+T}:T{
+.sp
+setab 14
+T}:T{
+.sp
+Background \- Bright Cyan
+T}
+T{
+.sp
+\fItext_bg_bright_white\fP
+T}:T{
+.sp
+setab 15
+T}:T{
+.sp
+Background \- Bright White
+T}
+.TE
+.sp
+.SH "SEE ALSO"
+.sp
+idioms(1), printf(1), terminfo(5), idioms(7)
+.SH "BUGS"
+.sp
+There\(cqs an IRC channel for this and other utilities at \c
+.URL "irc://irc.freenode.net/#mutiny" "" "."
+Please don\(cqt hesitate to message if you have questions.
+.SH "LICENSE"
+.sp
+\fBidioms\fP is in the public domain.
+.sp
+To the extent possible under law, Kylie McClain has waived all copyright and related or neighboring
+rights to this work.
+.sp
+.URL "http://creativecommons.org/publicdomain/zero/1.0/" "" ""
