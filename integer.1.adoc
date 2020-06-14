@@ -2,7 +2,7 @@
 
 == Name
 
-integer - check if a given string is an integer
+integer - check if all given arguments are positive integers
 
 == Synopsis
 
@@ -15,5 +15,9 @@ integer - check if a given string is an integer
 
 *1*::
     At least one string was not an integer.
+
+== Notes
+
+For the purposes of scripting, 0 (zero) is considered a positive integer.
 
 include::footer.adoc[]

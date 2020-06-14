@@ -2,12 +2,12 @@
 .\"     Title: integer
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-06-11
-.\"    Manual: Mutineer's Guide - idioms
-.\"    Source: Mutiny
+.\"      Date: 2020-06-14
+.\"    Manual: \ \&
+.\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "INTEGER" "1" "2020-06-11" "Mutiny" "Mutineer\(aqs Guide \- idioms"
+.TH "INTEGER" "1" "2020-06-14" "\ \&" "\ \&"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -28,7 +28,7 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-integer \- check if a given string is an integer
+integer \- check if all given arguments are positive integers
 .SH "SYNOPSIS"
 .sp
 \fBinteger\fP \fISTRING\fP...
@@ -43,6 +43,9 @@ All strings given were integers.
 .RS 4
 At least one string was not an integer.
 .RE
+.SH "NOTES"
+.sp
+For the purposes of scripting, 0 (zero) is considered a positive integer.
 .SH "BUGS"
 .sp
 There\(cqs an IRC channel for this and other utilities at \c
