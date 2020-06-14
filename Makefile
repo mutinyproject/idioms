@@ -46,6 +46,7 @@ html: FRC ${HTMLS}
 # NOTE: disable built-in rules which otherwise mess up creating .sh files
 .SUFFIXES:
 
+# ${IDIOMS_LIBDIR} is used to allow for testing prior to installation.
 .SUFFIXES: .in
 .in:
 	sed \
@@ -53,7 +54,7 @@ html: FRC ${HTMLS}
 	    -e "s|@@version@@|${version}|g" \
 	    -e "s|@@prefix@@|${prefix}|g" \
 	    -e "s|@@bindir@@|${bindir}|g" \
-	    -e "s|@@libdir@@|${libdir}|g" \
+	    -e "s|@@libdir@@|\$${IDIOMS_LIBDIR:-${libdir}}|g" \
 	    -e "s|@@mandir@@|${mandir}|g" \
 	    -e "s|@@man1dir@@|${man1dir}|g" \
 	    -e "s|@@man3dir@@|${man3dir}|g" \
@@ -66,7 +67,7 @@ html: FRC ${HTMLS}
 	    -e "s|@@version@@|${version}|g" \
 	    -e "s|@@prefix@@|${prefix}|g" \
 	    -e "s|@@bindir@@|${bindir}|g" \
-	    -e "s|@@libdir@@|${libdir}|g" \
+	    -e "s|@@libdir@@|\$${IDIOMS_LIBDIR:-${libdir}}|g" \
 	    -e "s|@@mandir@@|${mandir}|g" \
 	    -e "s|@@man1dir@@|${man1dir}|g" \
 	    -e "s|@@man3dir@@|${man3dir}|g" \
