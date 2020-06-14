@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. idioms
+
+usage() { die "usage: %s ARGUMENT...\n" "${0##*/}"; }
+
+[ $# -gt 0 ] || usage
+
+shift $(( $# - 1 ))
+printf '%s\n' "$1"

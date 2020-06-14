@@ -1,0 +1,19 @@
+= lastarg(1)
+
+== Name
+
+lastarg - print the last argument given
+
+== Synopsis
+
+*lastarg* _ARGUMENT_...
+
+== Exit status
+
+*0*::
+    The argument was printed succesfully.
+
+*1*::
+    No arguments were given.
+
+include::footer.adoc[]
