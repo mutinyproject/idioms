@@ -9,6 +9,13 @@ mandir ?= ${datadir}/man
 man1dir ?= ${mandir}/man1
 man3dir ?= ${mandir}/man3
 
+ASCIIDOCTOR ?= asciidoctor
+ASCIIDOCTOR += --failure-level=WARNING
+ASCIIDOCTOR += -a manmanual="Mutineer's Guide - ${name}"
+ASCIIDOCTOR += -a mansource="Mutiny"
+
+SHELLSPEC_FLAGS ?= --format tap
+
 -include config.mk
 
 libdir := ${libdir}/${name}
@@ -30,13 +37,6 @@ MAN7 = \
 
 MANS = ${MAN1} ${MAN3} ${MAN7}
 HTMLS = ${MANS:=.html}
-
-ASCIIDOCTOR ?= asciidoctor
-ASCIIDOCTOR += --failure-level=WARNING
-ASCIIDOCTOR += -a manmanual="Mutineer's Guide - ${name}"
-ASCIIDOCTOR += -a mansource="Mutiny"
-
-SHELLSPEC_FLAGS ?= --format tap
 
 all: FRC ${BINS} ${LIBS} ${MANS}
 dev: FRC README all lint check
