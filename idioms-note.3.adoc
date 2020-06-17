@@ -1,0 +1,25 @@
+= idioms-note(3)
+
+== Name
+
+idioms-note - print a note message to standard output
+
+== Synopsis
+
+`. *idioms*`
+
+*note* _MESSAGE_...
+
+== Description
+
+*note* prints each _MESSAGE_ to standard output, formatted like so:
+
+    *note*: _MESSAGE_
+
+If colors are enabled (see idioms(3)), then "note" will be blue and emboldened.
+
+== See also
+
+idioms(3)
+
+include::footer.adoc[]

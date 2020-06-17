@@ -14,10 +14,9 @@ stderr() {
 }
 
 note() {
-    _idioms_msg="${1}"
-    shift
+    [ $# -ge 1 ] || usage "note MESSAGE..."
 
-    printf -- "${text_bold}${text_fg_blue}note${text_reset}: ${_idioms_msg}\n" "$@"
+    printf -- "${text_bold}${text_fg_blue}note${text_reset}: %s\n" "$@"
 }
 
 warning() {

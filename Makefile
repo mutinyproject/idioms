@@ -34,7 +34,9 @@ LIBS = \
     idioms.sh
 
 MAN1 = ${BINS:=.1}
-MAN3 = ${LIBS:.sh=.3}
+MAN3 = \
+    ${LIBS:.sh=.3} \
+    idioms-note.3
 MAN7 = \
     idioms.7
 
