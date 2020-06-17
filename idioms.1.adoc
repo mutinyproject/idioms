@@ -6,7 +6,7 @@ idioms - setup usage of idioms functions in a script
 
 == Synopsis
 
-. *idioms*
+`. *idioms*`
 
 == Description
 
