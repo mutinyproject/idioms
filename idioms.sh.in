@@ -7,6 +7,12 @@
 # See <https://no-color.org/>.
 : "${NO_COLOR:=}"
 
+usage() {
+    [ $# -ge 1 ] || usage "usage MESSAGE..."
+
+    printf -- "usage: %s\n" "$@" >&2
+    exit 22
+}
 
 note() {
     [ $# -ge 1 ] || usage "note MESSAGE..."

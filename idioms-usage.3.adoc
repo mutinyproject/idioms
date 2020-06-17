@@ -1,0 +1,25 @@
+= idioms-usage(3)
+
+== Name
+
+idioms-usage - print a usage message to standard error, then exit
+
+== Synopsis
+
+`. *idioms*`
+
+*usage* _MESSAGE_
+
+== Description
+
+*usage* prints the _MESSAGE_ given to standard error, formatted like so:
+
+    usage: _MESSAGE_
+
+and then exits unsuccessfully, error code 22.
+
+== See also
+
+idioms(3)
+
+include::footer.adoc[]

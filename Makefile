@@ -40,6 +40,7 @@ MAN3 = \
     idioms-die.3 \
     idioms-error.3 \
     idioms-note.3 \
+    idioms-usage.3 \
     idioms-warn.3
 MAN7 = \
     idioms.7

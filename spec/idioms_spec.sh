@@ -2,6 +2,13 @@ _idioms_colors=false
 . idioms
 
 Describe 'idioms'
+    Describe 'usage'
+        It 'prints a usage statement ("usage: progname [-z]") and then exits unsuccessfully'
+            When run usage "progname [-z]"
+            The status should equal 22
+            The stderr should equal 'usage: progname [-z]'
+        End
+    End
 
     Describe 'note'
         It 'prints a note ("note: ${message}") to stdout'
