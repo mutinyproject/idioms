@@ -68,22 +68,6 @@ Describe 'idioms'
         End
     End
 
-    Describe 'die'
-        It 'exits unsuccessfully when no arguments are specified'
-            When run die
-            The status should equal 1
-            The stdout length should equal 0
-            The stderr length should equal 0
-        End
-
-        It 'exits unsuccessfully, with a message to stderr when arguments are specified'
-            When run die 'dying'
-            The status should equal 1
-            The stdout length should equal 0
-            The line 1 of stderr should equal 'dying: dying'
-        End
-    End
-
     Describe 'call'
         It 'runs a command within the same shell (`exit` would exit the calling shell)'
             When call call echo 'echoed'
@@ -127,6 +111,29 @@ Describe 'idioms'
             The status should equal 0
             The stderr lines should equal 1
             The line 1 of stderr should equal '+ true -n'
+        End
+    End
+
+    Describe 'die'
+        It 'exits with error code 1 when no arguments are specified'
+            When run die
+            The status should equal 1
+            The stdout length should equal 0
+            The stderr lines should equal 0
+        End
+
+        It 'exits unsuccessfully, with a given error code'
+            When run die 123
+            The status should equal 123
+            The stdout length should equal 0
+            The stderr length should equal 0
+        End
+
+        It 'exits unsuccessfully, with a given error code and message'
+            When run die 123 died
+            The status should equal 123
+            The stdout length should equal 0
+            The line 1 of stderr should equal "dying: died"
         End
     End
 End

@@ -1,0 +1,27 @@
+= idioms-die(3)
+
+== Name
+
+idioms-die - die, printing a message to standard error if given
+
+== Synopsis
+
+`. *idioms*`
+
+*die* _ERRNO_ _MESSAGE_...
+
+== Description
+
+*die* prints each _MESSAGE_ to standard error, formatted like so:
+
+    *dying*: _MESSAGE_
+
+and then exits with the _ERRNO_ given.
+
+If colors are enabled (see idioms(3)), then "dying" will be red and emboldened.
+
+== See also
+
+idioms(3)
+
+include::footer.adoc[]

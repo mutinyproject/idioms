@@ -32,30 +32,28 @@ error() {
 }
 
 die() {
-    _idioms_errno=1
+    case "$#" in
+        0)
+            exit 1
+            ;;
+        1)
+            _idioms_die_errno="${1}"
+            exit "${_idioms_die_errno}"
+            ;;
+        2)
+            :
+            ;;
+        *)
+            usage "die [ERRNO] [MESSAGE...]"
+            ;;
+    esac
 
-    while getopts :e: _idioms_arg >/dev/null 2>&1; do
-        case "${_idioms_arg}" in
-            e)
-                _idioms_errno="${OPTARG}"
-                ;;
-            ?)
-                error "unknown argument -- %s\n" "${OPTARG}"
-                stderr "usage: %s [-e ERRNO] [FORMAT]" "die"
-                return 127
-                ;;
-        esac
-    done
-    shift $(( OPTIND - 1 ))
+    _idioms_die_errno="${1}"
+    shift
 
-    if [ $# -gt 0 ]; then
-        _idioms_msg="${1}"
-        shift
+    printf -- "${text_bold}${text_fg_red}dying${text_reset}: %s\n" "$@" >&2
 
-        stderr "${text_bold}${text_fg_red}dying${text_reset}: ${_idioms_msg}\n" "$@"
-    fi
-
-    exit "${_idioms_errno}"
+    exit "${_idioms_die_errno}"
 }
 
 call() {
