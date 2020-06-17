@@ -36,6 +36,7 @@ LIBS = \
 MAN1 = ${BINS:=.1}
 MAN3 = \
     ${LIBS:.sh=.3} \
+    idioms-error.3 \
     idioms-note.3 \
     idioms-warn.3
 MAN7 = \

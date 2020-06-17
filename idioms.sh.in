@@ -26,38 +26,9 @@ warn() {
 }
 
 error() {
-    _idioms_die=false
-    _idioms_errno=1
+    [ $# -eq 1 ] || usage "error MESSAGE..."
 
-    while getopts :de: _idioms_arg >/dev/null 2>&1; do
-        case "${_idioms_arg}" in
-            d)
-                _idioms_die=true
-                ;;
-            e)
-                _idioms_errno="${OPTARG}"
-                ;;
-            ?)
-                error "unknown argument -- %s\n" "${OPTARG}"
-                return 127
-                ;;
-        esac
-    done
-
-    shift $(( OPTIND - 1 ))
-
-    if [ $# -eq 0 ];then
-        stderr "usage: %s [-d] [-e ERRNO] FORMAT\n" "error"
-        return 127
-    fi
-
-    _idioms_msg="${1}"
-    shift
-
-    stderr "${text_bold}${text_fg_red}error${text_reset}: ${_idioms_msg}\n" "$@"
-    "${_idioms_die}" && exit "${_idioms_errno}"
-
-    return "${_idioms_errno}"
+    printf -- "${text_bold}${text_fg_red}error${text_reset}: %s\n" "$@" >&2
 }
 
 die() {

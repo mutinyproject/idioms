@@ -1,0 +1,30 @@
+= idioms-error(3)
+
+== Name
+
+idioms-error - print an error message to standard error
+
+== Synopsis
+
+`. *idioms*`
+
+*error* _MESSAGE_...
+
+== Description
+
+*error* prints each _MESSAGE_ to standard error, formatted like so:
+
+    *error*: _MESSAGE_
+
+and then returns successfully.
+
+So as to keep the amount of flow control functions to a minimum, you are expected to run
+idioms-die(3) afterwards if you wish for the program to die after showing the error.
+
+If colors are enabled (see idioms(3)), then "error" will be red and emboldened.
+
+== See also
+
+idioms(3), idioms-die(3)
+
+include::footer.adoc[]

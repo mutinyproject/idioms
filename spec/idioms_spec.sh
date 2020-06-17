@@ -54,37 +54,14 @@ Describe 'idioms'
     Describe 'error'
         It 'prints an error ("error: ${message}") to stderr'
             When call error 'errored'
-            The status should equal 1
+            The status should equal 0
             The stdout length should equal 0
             The stderr should equal 'error: errored'
         End
 
-        # `When run` must be used here rather than `When call`, because `run` will not catch
-        # the exit and shellspec will think it is a problem.
-        It 'dies if you specify the -d option'
-            When run error -d 'errored'
-            The status should equal 1
-            The stdout length should equal 0
-            The stderr lines should equal 1
-            The line 1 of stderr should equal 'error: errored'
-        End
-
-        It 'returns with a specific errno if you specify -e ERRNO'
-            When call error -e 123 'errored'
-            The status should equal 123
-            The stderr lines should equal 1
-        End
-
-        # Same here.
-        It 'dies with a specific errno if you specify -e ERRNO'
-            When run error -de 123 'errored'
-            The status should equal 123
-            The stderr lines should equal 1
-        End
-
         It 'always adds a newline to the end, like `echo`'
             When call error 'errored'
-            The status should equal 1
+            The status should equal 0
             The stderr should equal 'error: errored'
             The stdout length should equal 0
             The stderr lines should equal 1
