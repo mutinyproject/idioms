@@ -86,7 +86,7 @@ Describe 'idioms'
             The stderr lines should equal 2
             The stdout lines should equal 0
             The line 1 of stderr should equal '+ sh -c exit 123'
-            The line 2 of stderr should equal 'error: command `sh -c exit 123` exited with 123'
+            The line 2 of stderr should equal 'dying: command `sh -c exit 123` exited with 123'
         End
 
         It 'dies with a message if the command fails (using `error -d`)'
@@ -95,7 +95,7 @@ Describe 'idioms'
             The stderr lines should equal 2
             The stdout lines should equal 0
             The line 1 of stderr should equal '+ false'
-            The line 2 of stderr should equal 'error: command `false` exited with 1'
+            The line 2 of stderr should equal 'dying: command `false` exited with 1'
         End
 
         It 'does not die if you specify -k, and instead shows a warning, exiting successfully'
@@ -107,10 +107,18 @@ Describe 'idioms'
         End
 
         It 'does not interpret arguments after the first non-dash-prefixed argument'
-            When call call true -n
+            When call call true -z
             The status should equal 0
             The stderr lines should equal 1
-            The line 1 of stderr should equal '+ true -n'
+            The line 1 of stderr should equal '+ true -z'
+        End
+
+        It 'handles invalid arguments, dying when given them'
+            When run call -z true
+            The status should equal 22
+            The stderr lines should equal 2
+            The line 1 of stderr should equal 'error: unknown argument -- z'
+            The line 2 of stderr should start with 'usage: '
         End
     End
 

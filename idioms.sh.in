@@ -57,9 +57,9 @@ die() {
 }
 
 call() {
-    _idioms_dry_run=false
-    _idioms_keep_going=false
-    _idioms_err_code=
+    _idioms_call_dry_run=false
+    _idioms_call_keep_going=false
+    _idioms_call_err_code=
 
     # NOTE: usage of getopts(1) here is unusual because we don't want to parse any of the options
     #       after a command name, only *before*.
@@ -69,18 +69,17 @@ call() {
                 break
                 ;;
             -*)
-                while getopts :kn _idioms_arg "$1" >/dev/null 2>&1; do
-                    case "${_idioms_arg}" in
+                while getopts :kn _idioms_call_arg "$1" >/dev/null 2>&1; do
+                    case "${_idioms_call_arg}" in
                         k)
-                            _idioms_keep_going=true
+                            _idioms_call_keep_going=true
                             ;;
                         n)
-                            _idioms_dry_run=true
+                            _idioms_call_dry_run=true
                             ;;
                         ?)
-                            error "unknown argument -- %s\n" "${OPTARG}"
-                            stderr "usage: %s [-kn] COMMAND..." "call"
-                            return 127
+                            error "unknown argument -- ${OPTARG}"
+                            usage "call [-kn] COMMAND"
                             ;;
                     esac
                 done
@@ -93,17 +92,19 @@ call() {
         shift
     done
 
-    stderr "+ %s\n" "$*"
+    [ $# -ge 1 ] || usage "call [-kn] COMMAND"
+
+    printf -- "+ %s\n" "$*" >&2
 
     # XXX: This looks kinda ugly.
-    if ! "${_idioms_dry_run}"; then
+    if ! "${_idioms_call_dry_run}"; then
         "$@" || {
-            _idioms_err_code=$?
-            if "${_idioms_keep_going}"; then
-                warning "command \`%s\` exited with %s" "$*" "${_idioms_err_code}"
+            _idioms_call_err_code=$?
+            if "${_idioms_call_keep_going}"; then
+                warn "command \`$*\` exited with ${_idioms_call_err_code}"
             else
-                error -d -e "${_idioms_err_code}" \
-                    "command \`%s\` exited with %s" "$*" "${_idioms_err_code}"
+                die "${_idioms_call_err_code}" "command \`$*\` exited with ${_idioms_call_err_code}"
+                exit "${_idioms_call_err_code}"
             fi
         }
     fi

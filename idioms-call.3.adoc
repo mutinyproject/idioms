@@ -1,0 +1,39 @@
+= idioms-call(3)
+
+== Name
+
+idioms-call - print command to standard error, run it, die if it exits successfully
+
+== Synopsis
+
+`. *idioms*`
+
+*call* [*-kn*] _COMMAND_
+
+== Description
+
+*call* prints the _COMMAND_ given to standard error, formatted like so:
+
+    + _COMMAND_
+
+and then executes it. If the command exits unsuccessfully, it will die (using idioms-die(3)),
+reporting the command that failed and the code it exited with.
+
+== Options
+
+Any options passed *must* be given before the _COMMAND_. Anything after a "*--*", or the first
+argument that does not begin with a dash will be considered to be where the _COMMAND_ begins.
+
+*-k*::
+    Keep going if _COMMAND_ fails, do not die. This will raise a warning (using idioms-warn(3)) if
+    _COMMAND_ exits unsuccessfully.
+
+*-n*::
+    Don't actually run _COMMAND_, just print it. You may also set __idioms_call_dry_run_ to do
+    the same.
+
+== See also
+
+idioms(3)
+
+include::footer.adoc[]
