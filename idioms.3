@@ -2,12 +2,12 @@
 .\"     Title: idioms
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-06-16
+.\"      Date: 2020-06-17
 .\"    Manual: Mutineer's Guide - idioms
 .\"    Source: Mutiny
 .\"  Language: English
 .\"
-.TH "IDIOMS" "3" "2020-06-16" "Mutiny" "Mutineer\(aqs Guide \- idioms"
+.TH "IDIOMS" "3" "2020-06-17" "Mutiny" "Mutineer\(aqs Guide \- idioms"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -38,72 +38,37 @@ idioms \- useful functions that work within a script runtime
 well as making pretty output easier.
 .SH "FUNCTIONS"
 .sp
-The following is usage for all functions within the \fBidioms\fP library.
-.SS "\fBdie\fP"
+The following is a list of all functions within the \fBidioms\fP library.
 .sp
-die \- die, printing a message to standard error if given
-.SS "Synopsis"
-.sp
-\fBdie\fP [\fB\-e\fP \fIERRNO\fP] [\fIFORMAT\fP]
-.SS "Options"
-.sp
-\fB\-e \fIERRNO\fP\fP
+\fBidioms\-call\fP(3)
 .RS 4
-Exit with \fIERRNO\fP as status. If unspecified, \fBdie\fP exits successfully (0).
-.RE
-.SS "\fBerror\fP"
-.sp
-error \- print an error (using stderr), appending a newline
-.SS "Synopsis"
-.sp
-\fBerror\fP [\fB\-d\fP] [\fB\-e\fP \fIERRNO\fP] \fIFORMAT\fP
-.SS "Options"
-.sp
-\fB\-d\fP
-.RS 4
-Die after printing the error.
+print command to standard error, run it, die if it exits unsuccessfully
 .RE
 .sp
-\fB\-e\fP \fIERRNO\fP
+\fBidioms\-die\fP(3)
 .RS 4
-Return \fIERRNO\fP after printing the error. If \fB\-d\fP is given, exit with \fIERRNO\fP instead.
-.RE
-.SS "\fBnote\fP"
-.sp
-note \- print a note (using printf(1)), appending a newline
-.SS "Synopsis"
-.sp
-note \fIFORMAT\fP
-.SS "\fBcall\fP"
-.sp
-call \- print command to standard error, run it, \f(CRdie\fP if it doesn\(cqt exit successfully
-.SS "Synopsis"
-.sp
-call [\fB\-kn\fP] \fICOMMAND\fP
-.SS "Options"
-.sp
-\fB\-k\fP
-.RS 4
-Keep going if the command fails, don\(cqt \f(CRdie\fP.
+die, printing a message to standard error if given
 .RE
 .sp
-\fB\-n\fP
+\fBidioms\-error\fP(3)
 .RS 4
-Don\(cqt actually run the command, just print it. You may also set \fI_idioms_call_dry_run\fP to do
-the same.
+print an error message to standard error
 .RE
-.SS "\fBstderr\fP"
 .sp
-stderr \- printf(1), redirected to standard error
-.SS "Synopsis"
+\fBidioms\-note\fP(3)
+.RS 4
+print a note message to standard output
+.RE
 .sp
-\fBstderr\fP \fIFORMAT\fP
-.SS "\fBwarning\fP"
+\fBidioms\-usage\fP(3)
+.RS 4
+print a usage message to standard error, then exit
+.RE
 .sp
-warning \- print a warning to standard error
-.SS "Synopsis"
-.sp
-\fBwarning\fP \fIFORMAT\fP
+\fBidioms\-warn\fP(3)
+.RS 4
+print a warning message to standard error
+.RE
 .SH "VARIABLES"
 .sp
 Scripts using \fBidioms\fP may not specify their own variables prefixed with \fI_idioms\fP.
@@ -111,7 +76,7 @@ Additionally, these variables may not be modified after the \fBidioms\fP script 
 .sp
 \fB_idioms_call_dry_run\fP
 .RS 4
-Always run \fBcall\fP with the \fB\-n\fP (dry run) option set.
+Always run \fBidioms\-call(3)\fP with the \fB\-n\fP (dry run) option set.
 .RE
 .sp
 \fB_idioms_colors\fP

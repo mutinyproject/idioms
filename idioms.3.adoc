@@ -15,77 +15,14 @@ well as making pretty output easier.
 
 == Functions
 
-The following is usage for all functions within the *idioms* library.
+The following is a list of all functions within the *idioms* library.
 
-=== *die*
-
-die - die, printing a message to standard error if given
-
-==== Synopsis
-
-*die* [*-e* _ERRNO_] [_FORMAT_]
-
-==== Options
-
-*-e _ERRNO_*::
-    Exit with _ERRNO_ as status. If unspecified, *die* exits successfully (0).
-
-=== *error*
-
-error - print an error (using stderr), appending a newline
-
-==== Synopsis
-
-*error* [*-d*] [*-e* _ERRNO_] _FORMAT_
-
-==== Options
-
-*-d*::
-    Die after printing the error.
-
-*-e* _ERRNO_::
-    Return _ERRNO_ after printing the error. If *-d* is given, exit with _ERRNO_ instead.
-
-=== *note*
-
-note - print a note (using printf(1)), appending a newline
-
-==== Synopsis
-
-note _FORMAT_
-
-=== *call*
-
-call - print command to standard error, run it, `die` if it doesn't exit successfully
-
-==== Synopsis
-
-call [*-kn*] _COMMAND_
-
-==== Options
-
-*-k*::
-    Keep going if the command fails, don't `die`.
-
-*-n*::
-    Don't actually run the command, just print it. You may also set __idioms_call_dry_run_ to do
-    the same.
-
-=== *stderr*
-
-stderr - printf(1), redirected to standard error
-
-==== Synopsis
-
-*stderr* _FORMAT_
-
-=== *warning*
-
-warning - print a warning to standard error
-
-==== Synopsis
-
-*warning* _FORMAT_
+*idioms-call*(3)::    print command to standard error, run it, die if it exits unsuccessfully
+*idioms-die*(3)::     die, printing a message to standard error if given
+*idioms-error*(3)::   print an error message to standard error
+*idioms-note*(3)::    print a note message to standard output
+*idioms-usage*(3)::   print a usage message to standard error, then exit
+*idioms-warn*(3)::    print a warning message to standard error
 
 == Variables
 
@@ -93,7 +30,7 @@ Scripts using *idioms* may not specify their own variables prefixed with __idiom
 Additionally, these variables may not be modified after the *idioms* script is sourced.
 
 *_idioms_call_dry_run*::
-    Always run *call* with the *-n* (dry run) option set.
+    Always run *idioms-call(3)* with the *-n* (dry run) option set.
 
 *_idioms_colors*::
     Set color variables (see _COLORS_ section below). If not specified, by the color variables are
