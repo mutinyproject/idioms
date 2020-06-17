@@ -2,21 +2,6 @@ _idioms_colors=false
 . idioms
 
 Describe 'idioms'
-    Describe 'stderr'
-        It 'prints to standard error'
-            When call stderr 'this should be in standard error\n'
-            The status should equal 0
-            The stderr lines should equal 1
-            The stderr should equal 'this should be in standard error'
-        End
-
-        It 'takes variables just like printf'
-            When call stderr 'variables %s' 'work'
-            The status should equal 0
-            The stderr lines should equal 1
-            The stderr should equal 'variables work'
-        End
-    End
 
     Describe 'note'
         It 'prints a note ("note: ${message}") to stdout'

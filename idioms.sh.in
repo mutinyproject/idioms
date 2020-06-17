@@ -7,11 +7,6 @@
 # See <https://no-color.org/>.
 : "${NO_COLOR:=}"
 
-stderr() {
-    # Variables are used intentionally here because the function is supposed to act like printf(1).
-    # shellcheck disable=SC2059
-    printf -- "$@" >&2
-}
 
 note() {
     [ $# -ge 1 ] || usage "note MESSAGE..."
