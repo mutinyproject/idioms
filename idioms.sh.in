@@ -112,7 +112,7 @@ call() {
 }
 
 _idioms_setup_colors() {
-    if [ "${_idioms_colors}" = 'true' ] && [ -z "${NO_COLOR}" ] && \
+    if [ "${_idioms_colors}" = 'true' ] && [ -z "${NO_COLOR}" ] && [ -t 0 ] && \
         command -v tput >/dev/null 2>&1; then
         text_reset=$(tput sgr0 2>/dev/null)
         text_fg_black=$(tput setaf 0 2>/dev/null)
