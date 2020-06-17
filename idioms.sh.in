@@ -112,6 +112,8 @@ call() {
 }
 
 _idioms_setup_colors() {
+    # These appear unused but I promise they're not.
+    # shellcheck disable=SC2034
     if [ "${_idioms_colors}" = 'true' ] && [ -z "${NO_COLOR}" ] && [ -t 0 ] && \
         command -v tput >/dev/null 2>&1; then
         text_reset=$(tput sgr0 2>/dev/null)
