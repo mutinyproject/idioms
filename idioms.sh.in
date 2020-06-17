@@ -112,6 +112,7 @@ call() {
                             ;;
                         ?)
                             error "unknown argument -- %s\n" "${OPTARG}"
+                            stderr "usage: %s [-kn] COMMAND..." "call"
                             return 127
                             ;;
                     esac
