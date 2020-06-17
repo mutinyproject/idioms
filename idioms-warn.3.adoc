@@ -1,0 +1,26 @@
+= idioms-warn(3)
+
+== Name
+
+idioms-warn - print a warning message to standard error
+
+== Synopsis
+
+`. *idioms*`
+
+*warn* _MESSAGE_...
+
+== Description
+
+*warn* prints each _MESSAGE_ to standard error, formatted like so:
+
+    *warning*: _MESSAGE_
+
+If colors are enabled (see idioms(3)), then "warning" will be yellow and emboldened.
+
+== See also
+
+idioms(3)
+
+include::footer.adoc[]
+

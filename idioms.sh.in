@@ -19,11 +19,10 @@ note() {
     printf -- "${text_bold}${text_fg_blue}note${text_reset}: %s\n" "$@"
 }
 
-warning() {
-    _idioms_msg="${1}"
-    shift
+warn() {
+    [ $# -ge 1 ] || usage "warn MESSAGE..."
 
-    stderr "${text_bold}${text_fg_yellow}warning${text_reset}: ${_idioms_msg}\n" "$@"
+    printf -- "${text_bold}${text_fg_yellow}warning${text_reset}: %s\n" "$@" >&2
 }
 
 error() {

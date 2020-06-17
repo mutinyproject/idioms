@@ -34,16 +34,16 @@ Describe 'idioms'
         End
     End
 
-    Describe "warning"
+    Describe 'warn'
         It 'prints a warning ("warning: ${message}") to stderr'
-            When call warning 'warned'
+            When call warn 'warned'
             The status should equal 0
             The stdout length should equal 0
             The stderr should equal 'warning: warned'
         End
 
         It 'always adds a newline to the end, like `echo`'
-            When call warning 'warned'
+            When call warn 'warned'
             The status should equal 0
             The stderr should equal 'warning: warned'
             The stdout length should equal 0
