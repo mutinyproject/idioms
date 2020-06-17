@@ -71,14 +71,6 @@ call [*-kn*] _COMMAND_
     Don't actually run the command, just print it. You may also set __idioms_call_dry_run_ to do
     the same.
 
-=== *run*
-
-run - call a command, but in a subshell
-
-==== Options
-
-See call's OPTIONS section.
-
 === *stderr*
 
 stderr - printf(1), redirected to standard error

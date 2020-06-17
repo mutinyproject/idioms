@@ -142,10 +142,6 @@ call() {
     fi
 }
 
-run() (
-    call "$@"
-)
-
 _idioms_setup_colors() {
     if [ "${_idioms_colors}" = 'true' ] && [ -z "${NO_COLOR}" ] && \
         command -v tput >/dev/null 2>&1; then

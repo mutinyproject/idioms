@@ -152,14 +152,4 @@ Describe 'idioms'
             The line 1 of stderr should equal '+ true -n'
         End
     End
-
-    Describe "run"
-        It 'just executes `call`, but in a subshell (`exit` would exit the subshell)'
-            When call run exit 123
-            The status should equal 123
-            The stderr lines should equal 1
-            The line 1 of stderr should equal '+ exit 123'
-        End
-    End
 End
-
