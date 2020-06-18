@@ -114,7 +114,7 @@ README: idioms.7
 	man ./$? | col -bx > $@
 
 lint: FRC ${BINS} ${LIBS}
-	${SHELLCHECK} ${BINS:=.in} ${LIBS:=.in}
+	${SHELLCHECK} ${BINS} ${LIBS}
 
 check: FRC ${BINS} ${LIBS}
 	${SHELLSPEC} ${SHELLSPEC_FLAGS}
