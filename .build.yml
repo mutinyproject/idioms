@@ -1,0 +1,39 @@
+image: archlinux
+
+sources:
+    - https://github.com/mutinyproject/idioms
+
+packages:
+    - asciidoctor
+    - shellspec
+    - shellcheck
+    - mksh
+    - oksh
+    - busybox
+    - dash
+    - ksh
+
+tasks:
+    - build: |
+        make -C idioms
+    - lint: |
+        make -C idioms lint
+    - check-bash: |
+        sudo ln -sf bash /bin/sh
+        make -C idioms check
+    - check-mksh: |
+        sudo ln -sf mksh /bin/sh
+        make -C idioms check
+    - check-oksh: |
+        # TODO: oksh isn't supposed to be installed to /usr/local...
+        sudo ln -sf /usr/local/bin/oksh /bin/sh
+        make -C idioms check
+    - check-busybox-ash: |
+        sudo ln -sf busybox /bin/sh
+        make -C idioms check
+    - check-dash: |
+        sudo ln -sf dash /bin/sh
+        make -C idioms check
+    - check-ksh: |
+        sudo ln -sf dash /bin/sh
+        make -C idioms check
