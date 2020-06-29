@@ -2,9 +2,9 @@
 
 . idioms
 
-usage() { die "usage: %s ARGUMENT...\n" "${0##*/}"; }
+myusage() { usage "lastarg ARGUMENT..."; }
 
-[ $# -gt 0 ] || usage
+[ $# -gt 0 ] || myusage
 
 shift $(( $# - 1 ))
 printf '%s\n' "$1"

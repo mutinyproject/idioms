@@ -2,7 +2,7 @@
 
 . idioms
 
-usage() { die "usage: %s [-EF] PATTERN STRING...\n" "${0##*/}"; }
+myusage() { usage "match [-EF] PATTERN STRING..."; }
 
 unset -v GREP_OPTIONS
 
@@ -15,15 +15,15 @@ while getopts :EF arg >/dev/null 2>&1; do
             pattern_type=-F
             ;;
         ?)
-            error "unknown argument -- %s\n" "${OPTARG}"
-            usage
+            error "unknown argument -- ${OPTARG}"
+            myusage
             ;;
 
     esac
 done
 shift $((OPTIND - 1))
 
-[ $# -gt 0 ] || usage
+[ $# -gt 0 ] || myusage
 
 pattern="${1}"; shift
 
