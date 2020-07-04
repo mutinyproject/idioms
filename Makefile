@@ -10,14 +10,15 @@ man1dir ?= ${mandir}/man1
 man3dir ?= ${mandir}/man3
 
 ASCIIDOCTOR ?= asciidoctor
-ASCIIDOCTOR_FLAGS += --failure-level=WARNING
-ASCIIDOCTOR_FLAGS += -a manmanual="Mutineer's Guide - ${name}"
-ASCIIDOCTOR_FLAGS += -a mansource="Mutiny"
 
 SHELLCHECK ?= shellcheck
 
 SHELLSPEC ?= shellspec
 SHELLSPEC_FLAGS ?= --format tap
+
+ASCIIDOCTOR_FLAGS += --failure-level=WARNING
+ASCIIDOCTOR_FLAGS += -a manmanual="Mutineer's Guide - ${name}"
+ASCIIDOCTOR_FLAGS += -a mansource="Mutiny"
 
 -include config.mk
 
