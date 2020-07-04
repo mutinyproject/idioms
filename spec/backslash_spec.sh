@@ -1,5 +1,3 @@
-sed --version
-
 Describe 'backslash'
     It 'combines line that are continued with a backslash at the end of the line'
         Data
