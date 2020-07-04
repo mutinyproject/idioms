@@ -49,7 +49,7 @@ MANS = ${MAN1} ${MAN3} ${MAN7}
 HTMLS = ${MANS:=.html}
 
 all: FRC ${BINS} ${LIBS} ${MANS}
-dev: FRC README all lint check
+dev: FRC README all html lint check
 
 bin: FRC ${BINS}
 lib: FRC ${LIBS}
@@ -86,12 +86,16 @@ html: FRC ${HTMLS}
 	    -e "s|@@man3dir@@|${man3dir}|g" \
 	    $< > $@
 
-.SUFFIXES: .adoc
-.html.adoc:
+.SUFFIXES: .adoc .html
+.adoc.html:
 	${ASCIIDOCTOR} ${ASCIIDOCTOR_FLAGS} -b html5 -d manpage -o $@ $<
 
 .adoc:
 	${ASCIIDOCTOR} ${ASCIIDOCTOR_FLAGS} -b manpage -d manpage -o $@ $<
+
+install-html: FRC html
+	install -d ${DESTDIR}${htmldir}
+	for html in ${HTMLS}; do install -m0644 $${html} ${DESTDIR}${htmldir}; done
 
 install: FRC all
 	install -d \

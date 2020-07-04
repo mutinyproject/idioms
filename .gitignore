@@ -5,3 +5,4 @@ integer
 lastarg
 match
 config.mk
+*.html
