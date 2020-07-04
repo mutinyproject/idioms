@@ -89,10 +89,10 @@ html: FRC ${HTMLS}
 
 .SUFFIXES: .adoc .html
 .adoc.html:
-	${ASCIIDOCTOR} ${ASCIIDOCTOR_FLAGS} -b html5 -d manpage -o $@ $<
+	${ASCIIDOCTOR} -b html5 ${ASCIIDOCTOR_FLAGS} -o $@ $<
 
 .adoc:
-	${ASCIIDOCTOR} ${ASCIIDOCTOR_FLAGS} -b manpage -d manpage -o $@ $<
+	${ASCIIDOCTOR} -b manpage -d manpage ${ASCIIDOCTOR_FLAGS} -o $@ $<
 
 install-html: FRC html
 	install -d ${DESTDIR}${htmldir}
