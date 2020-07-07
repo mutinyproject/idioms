@@ -37,6 +37,11 @@ Additionally, these variables may not be modified after the *idioms* script is s
     left undefined, since setting color variables by default would cause a small startup delay due
     to all the invocations to tput(1).
 
+*_idioms_loaded*::
+    Indicates that idioms is already loaded into the runtime, so as to avoid wasting time
+    redeclaring things that have already been set. This is set at the end of the script.
+    You shouldn't need to mess with this variable.
+
 == Colors
 
 One feature of *idioms* is providing access to text formatting codes through variables that degrade

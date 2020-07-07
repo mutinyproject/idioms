@@ -4,6 +4,8 @@
 # SC2034: Allow unused text_* variables.
 # shellcheck disable=SC2034,SC2059
 
+[ "${_idioms_loaded}" = 'true' ] && return
+
 # See <https://no-color.org/>.
 : "${NO_COLOR:=}"
 
@@ -197,7 +199,8 @@ _idioms_setup_colors() {
 }
 
 : "${_idioms_colors:=false}"
-readonly _idioms_colors
 
 _idioms_setup_colors
 
+: "${_idioms_loaded:=true}"
+readonly _idioms_loaded
