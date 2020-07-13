@@ -28,7 +28,8 @@ BINS = \
     idioms \
     integer \
     lastarg \
-    match
+    match \
+    ratelimit
 
 LIBS = \
     idioms.sh

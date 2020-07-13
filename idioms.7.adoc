@@ -18,6 +18,7 @@ idioms(3)::     useful functions that work within a script runtime
 integer(1)::    check if all given arguments are positve integers
 lastarg(1)::    print the last argument given
 match(1)::      succeed if all strings match a given pattern
+ratelimit(1)::  limit how often a command can be ran
 
 == Dependencies
 

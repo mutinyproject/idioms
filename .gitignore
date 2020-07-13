@@ -4,5 +4,6 @@ idioms.sh
 integer
 lastarg
 match
+ratelimit
 config.mk
 *.html

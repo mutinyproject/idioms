@@ -1,0 +1,36 @@
+#!/bin/sh
+
+. idioms
+
+myusage() { usage "ratelimit [-e ENTROPY] TIME COMMAND..."; }
+
+XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}"
+mkdir -p "${XDG_RUNTIME_DIR}"/ratelimit
+
+while getopts :e: arg; do
+    case "${arg}" in
+        e)
+            entropy=$(printf "%s\n" "${entropy}" "${OPTARG}")
+            ;;
+        ?)
+            error "unknown argument -- ${OPTARG}"
+            myusage
+            ;;
+    esac
+done
+
+shift $(( OPTIND - 1 ))
+
+[ $# -ge 2 ] || myusage
+
+time="$1"; shift
+
+entropy=$(printf '%s\n' "${entropy:-$@}" | cksum | cut -d' ' -f1)
+temp="${XDG_RUNTIME_DIR}"/ratelimit/"${entropy}".lock
+
+[ -f "${temp}" ] && exit 100
+
+touch "${temp}"
+"$@" & sleep "${time}"
+wait
+rm -f "${temp}"

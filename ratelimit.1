@@ -1,0 +1,69 @@
+'\" t
+.\"     Title: ratelimit
+.\"    Author: [see the "AUTHOR(S)" section]
+.\" Generator: Asciidoctor 2.0.10
+.\"      Date: 2020-07-13
+.\"    Manual: Mutineer's Guide - idioms
+.\"    Source: Mutiny
+.\"  Language: English
+.\"
+.TH "RATELIMIT" "1" "2020-07-13" "Mutiny" "Mutineer\(aqs Guide \- idioms"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+ratelimit \- limit how often a command can be ran
+.SH "SYNOPSIS"
+.sp
+\fBratelimit\fP [\fB\-e\fP \fIENTROPY\fP] \fITIME\fP \fICOMMAND\fP...
+.SH "DESCRIPTION"
+.sp
+\fBratelimit\fP creates a lock file, runs \fICOMMAND\fP as a child, waits the \fITIME\fP given to elapse, and
+then removes the lock file.
+.sp
+If, during the wait period, \fBratelimit\fP is ran again with the same arguments, it will not run the
+command and will instead exit 100.
+.sp
+If \fB\-e\fP \fIENTROPY\fP is not passed, the lock file is a sum (generated with cksum(1)) of the \fICOMMAND\fP.
+.SH "OPTIONS"
+.sp
+\fB\-e\fP \fIENTROPY\fP
+.RS 4
+Add \fIENTROPY\fP as a string used to calculate the filename used for the lock file; this function
+is useful for running multiple rate\-limited instances of a command and preventing them from
+clashing. If this is specified, \fICOMMAND\fP is not used in creating a filename.
+.RE
+.SH "CONTRIBUTING"
+.sp
+The canonical URL of this repository is \c
+.URL "https://git.mutiny.red/mutiny/idioms" "" "."
+Submit patches and bugs to \c
+.MTO "kylie\(atsomas.is" "" "."
+.sp
+There is also an IRC channel for \fBidioms\fP and other projects at \c
+.URL "irc://irc.freenode.net/#mutiny" "" "."
+Please don\(cqt hesitate to message if you need help.
+.SH "LICENSE"
+.sp
+\fBidioms\fP is in the public domain.
+.sp
+To the extent possible under law, Kylie McClain has waived all copyright and related or neighboring
+rights to this work.
+.sp
+.URL "http://creativecommons.org/publicdomain/zero/1.0/" "" ""
