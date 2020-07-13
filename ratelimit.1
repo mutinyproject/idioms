@@ -35,19 +35,20 @@ ratelimit \- limit how often a command can be ran
 .SH "DESCRIPTION"
 .sp
 \fBratelimit\fP creates a lock file, runs \fICOMMAND\fP as a child, waits the \fITIME\fP given to elapse, and
-then removes the lock file.
+then removes the lock file. \fITIME\fP is simply passed to sleep(1), so it supports whatever format
+sleep(1) uses.
 .sp
 If, during the wait period, \fBratelimit\fP is ran again with the same arguments, it will not run the
 command and will instead exit 100.
 .sp
-If \fB\-e\fP \fIENTROPY\fP is not passed, the lock file is a sum (generated with cksum(1)) of the \fICOMMAND\fP.
+The lock file is a sum (generated with cksum(1)) of any \fB\-e\fP arguments given, and the \fICOMMAND\fP.
 .SH "OPTIONS"
 .sp
 \fB\-e\fP \fIENTROPY\fP
 .RS 4
-Add \fIENTROPY\fP as a string used to calculate the filename used for the lock file; this function
+Add \fIENTROPY\fP to the list of strings used to calculate the name of the lock file; this function
 is useful for running multiple rate\-limited instances of a command and preventing them from
-clashing. If this is specified, \fICOMMAND\fP is not used in creating a filename.
+clashing.
 .RE
 .SH "CONTRIBUTING"
 .sp

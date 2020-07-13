@@ -17,13 +17,13 @@ sleep(1) uses.
 If, during the wait period, *ratelimit* is ran again with the same arguments, it will not run the
 command and will instead exit 100.
 
-If *-e* _ENTROPY_ is not passed, the lock file is a sum (generated with cksum(1)) of the _COMMAND_.
+The lock file is a sum (generated with cksum(1)) of any *-e* arguments given, and the _COMMAND_.
 
 == Options
 
 *-e* _ENTROPY_::
-    Add _ENTROPY_ as a string used to calculate the filename used for the lock file; this function
+    Add _ENTROPY_ to the list of strings used to calculate the name of the lock file; this function
     is useful for running multiple rate-limited instances of a command and preventing them from
-    clashing. If this is specified, _COMMAND_ is not used in creating a filename.
+    clashing.
 
 include::footer.adoc[]
