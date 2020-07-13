@@ -2,12 +2,12 @@
 .\"     Title: idioms
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-06-17
+.\"      Date: 2020-07-07
 .\"    Manual: Mutineer's Guide - idioms
 .\"    Source: Mutiny
 .\"  Language: English
 .\"
-.TH "IDIOMS" "3" "2020-06-17" "Mutiny" "Mutineer\(aqs Guide \- idioms"
+.TH "IDIOMS" "3" "2020-07-07" "Mutiny" "Mutineer\(aqs Guide \- idioms"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -84,6 +84,13 @@ Always run \fBidioms\-call(3)\fP with the \fB\-n\fP (dry run) option set.
 Set color variables (see \fICOLORS\fP section below). If not specified, by the color variables are
 left undefined, since setting color variables by default would cause a small startup delay due
 to all the invocations to tput(1).
+.RE
+.sp
+\fB_idioms_loaded\fP
+.RS 4
+Indicates that idioms is already loaded into the runtime, so as to avoid wasting time
+redeclaring things that have already been set. This is set at the end of the script.
+You shouldn\(cqt need to mess with this variable.
 .RE
 .SH "COLORS"
 .sp
