@@ -11,7 +11,8 @@ ratelimit - limit how often a command can be ran
 == Description
 
 *ratelimit* creates a lock file, runs _COMMAND_ as a child, waits the _TIME_ given to elapse, and
-then removes the lock file.
+then removes the lock file. _TIME_ is simply passed to sleep(1), so it supports whatever format
+sleep(1) uses.
 
 If, during the wait period, *ratelimit* is ran again with the same arguments, it will not run the
 command and will instead exit 100.
