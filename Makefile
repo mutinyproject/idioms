@@ -14,7 +14,6 @@ ASCIIDOCTOR ?= asciidoctor
 SHELLCHECK ?= shellcheck
 
 SHELLSPEC ?= shellspec
-SHELLSPEC_FLAGS ?= --format tap
 
 ASCIIDOCTOR_FLAGS += --failure-level=WARNING
 ASCIIDOCTOR_FLAGS += -a manmanual="Mutineer's Guide - ${name}"
